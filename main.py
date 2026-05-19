@@ -4,17 +4,34 @@ Squelette de départ pour votre équipe.
 """
 import argparse
 
+# demander a l`utilisateur de saisir un mot et une cle
 
-def chiffrer(message: str, cle: int):
-	# TODO: retourner la chaîne chiffrée (type str).
-	# Exigences visibles dans tests/test_caesar.py :
-	# - test_cesar_officiel_cle_42
-	# - test_cesar_officiel_cle_neg_42
-	# - test_cesar_cle_zero_identite
-	# Exemples attendus par les tests :
-	# - chiffrer("Veni, vidi, vici!", 42) -> "Ludy, lyty, lysy!"
-	# - chiffrer("Veni, vidi, vici!", -42) -> "Foxs, fsns, fsms!"
-	# - chiffrer("Tout pareil.", 0) -> "Tout pareil."
+mot = input("Entrez un mot : ")
+
+cle = int(input("Entrez une clé : "))
+
+resultat = chiffrer(mot, cle)
+
+print("Mot chiffré :", resultat)
+
+
+def chiffrer(mot, cle):
+
+alphabet = string.ascii_lowercase
+
+# parcourir chaque lettre du mot
+
+for lettre in mot:
+#convertir en minuscule
+	lettre = lettre.lower()
+
+# vérifier si c'est une lettre
+	if lettre in alphabet:
+# trouver sa position
+position = alphabet.find(lettre)
+
+
+
 	pass
 
 
