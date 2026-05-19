@@ -10,6 +10,23 @@ Pour lancer les tests :
 import sys
 from pathlib import Path
 
+def test_cesar_grandes_cles():
+    """Vérifie que le modulo gère correctement les clés """
+    msg = "Test"
+    # Clé géante positive (2600 est un multiple de 26)
+    assert chiffrer(msg, 2600) == "Test"
+    # Clé géante négative (-2626 est un multiple de 26)
+    assert chiffrer(msg, -2626) == "Test"
+
+def test_cesar_caracteres_speciaux():
+    """Vérifie que la ponctuation, les espaces et les accents ne bougent pas."""
+    msg = "Hé, oh ! Regarde ça."
+    # Avec une clé de 1, 'H' devient 'I', 'R' devient 'S', etc. 
+    # Mais les espaces, virgules et accents restent à leur place.
+    assert chiffrer(msg, 1) == "Ié, pi ! Sfhbsef ça."
+    
+    
+
 # Permet d'importer main.py depuis le dossier parent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from main import chiffrer, dechiffrer, enigma_chiffrer  # noqa: E402
