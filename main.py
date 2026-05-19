@@ -46,6 +46,7 @@ def chiffrer(message: str, cle: int):
 			resultat += caractere
 	#Retourner le message final
 	return resultat
+
 	# Exigences visibles dans tests/test_caesar.py :
 	# - test_cesar_officiel_cle_42
 	# - test_cesar_officiel_cle_neg_42
