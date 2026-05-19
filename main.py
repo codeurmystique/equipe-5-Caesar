@@ -3,16 +3,50 @@ MGA802 — Mini-Projet A : Chiffrement de César
 Squelette de départ pour votre équipe.
 """
 import argparse
+import string
 
-def enlever_les_carateres_speciaux(mot):
-	import unicodedata
-	normalized_word=unicodedata.normalize('NFKD',mot)
-	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
-#Hello world
+#Alphabet utilisé pour le chiffrement
+alphabet = string.ascii_lowercase
+
 
 def chiffrer(message: str, cle: int):
+	"""
+	Chiffre un message avec le chiffrement de César.
+	Paramètres:
+	 message (str) : texte à chiffrer.
+	 clé (int) : décalage à appliquer
+	 	"""
 	# TODO: retourner la chaîne chiffrée (type str).
-	# Exigences visibles dans taests/test_caesar.py :
+
+	#Transformer le message en minuscules
+	message = message.lower()
+
+	# Variable qui contiendra le résultat final
+	resultat = ""
+
+	# Parcourir chaque caractère du message
+	for caractere in message:
+
+		#Vérifier si le caractère est une lettre de l'àlphabet
+		if caractere in alphabet:
+			#Trouver la position actuelle de la lettre
+			position = alphabet.index(caractere)
+
+			#Calculer la nouvelle position avec le décalage
+			nouvelle_position = (position + cle) % 26
+
+			#Trouver la nouvelle lettre
+			nouvelle_lettre = alphabet[nouvelle_position]
+
+			#Ajouter la lettre chiffrée au résultat
+			resultat += nouvelle_lettre
+
+		else:
+			#Garder les espace et ponctuations inchangés
+			resultat += caractere
+	#Retourner le message final
+	return resultat
+	# Exigences visibles dans tests/test_caesar.py :
 	# - test_cesar_officiel_cle_42
 	# - test_cesar_officiel_cle_neg_42
 	# - test_cesar_cle_zero_identite
