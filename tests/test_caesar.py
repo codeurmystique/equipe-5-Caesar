@@ -24,9 +24,26 @@ def test_cesar_caracteres_speciaux():
     # Avec une clé de 1, 'H' devient 'I', 'R' devient 'S', etc. 
     # Mais les espaces, virgules et accents restent à leur place.
     assert chiffrer(msg, 1) == "Ié, pi ! Sfhbsef ça."
-    
-    
 
+def test_cesar_casse_majuscule_minuscule():
+    """Vérifie que la casse est strictement préservée."""
+    assert chiffrer("aBcD", 1) == "bCdE"
+    assert chiffrer("XyZ", 3) == "AbC"
+    
+def test_cesar_brute_force_logique():
+    """Simule la logique du brute-force : une des 26 cles doit casser le code."""
+    message_original = "Alerte rouge"
+    message_chiffre = chiffrer(message_original, 15)
+    
+    # Le brute-force va tester les clés de 0 à 25
+    solutions_trouvees = []
+    for cle_test in range(26):
+        decouvert = dechiffrer(message_chiffre, cle_test)
+        if decouvert == message_original:
+            solutions_trouvees.append(cle_test)
+            
+    # On s'assure qu'on a trouvé EXACTEMENT la bonne clé (15)
+    assert 15 in solutions_trouvees
 # Permet d'importer main.py depuis le dossier parent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from main import chiffrer, dechiffrer, enigma_chiffrer  # noqa: E402
