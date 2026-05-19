@@ -38,15 +38,15 @@ def chiffrer(mot: str, cle: int):
 		for caractere in mot:
 
 			# Vérifier si le caractère est une lettre
-			if caractere.lower() in alphabet:
+			if caractere.lower() in mot :
 
 				# Trouver la position de la lettre
-				position = alphabet.find(caractere.lower())
+				position = mot.find(caractere.lower())
 
 				# Décalage inverse
 				nouvelle_position = (position - cle) % 26
 				# Nouvelle lettre
-				nouvelle_lettre = alphabet[nouvelle_position]
+				nouvelle_lettre = mot[nouvelle_position]
 
 				resultat.append(nouvelle_lettre)
 
