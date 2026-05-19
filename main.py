@@ -6,7 +6,7 @@ import argparse
 
 # demander a l`utilisateur de saisir un mot et une cle
 
-mot = input("Entrez un mot : ")
+mot = str(input("Entrez un mot : "))
 
 cle = int(input("Entrez une clé : "))
 
