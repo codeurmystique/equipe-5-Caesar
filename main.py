@@ -8,7 +8,7 @@ def enlever_les_carateres_speciaux(mot):
 	import unicodedata
 	normalized_word=unicodedata.normalize('NFKD',mot)
 	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
-
+#Hello world
 
 def chiffrer(message: str, cle: int):
 	# TODO: retourner la chaîne chiffrée (type str).
