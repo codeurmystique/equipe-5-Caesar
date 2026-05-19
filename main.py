@@ -4,10 +4,15 @@ Squelette de départ pour votre équipe.
 """
 import argparse
 
+def enlever_les_carateres_speciaux(mot):
+	import unicodedata
+	normalized_word=unicodedata.normalize('NFKD',mot)
+	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
+
 
 def chiffrer(message: str, cle: int):
 	# TODO: retourner la chaîne chiffrée (type str).
-	# Exigences visibles dans tests/test_caesar.py :
+	# Exigences visibles dans taests/test_caesar.py :
 	# - test_cesar_officiel_cle_42
 	# - test_cesar_officiel_cle_neg_42
 	# - test_cesar_cle_zero_identite
