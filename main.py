@@ -4,26 +4,58 @@ Squelette de départ pour votre équipe.
 """
 import argparse
 
-def enlever_les_carateres_speciaux(mot):
-	import unicodedata
-	normalized_word=unicodedata.normalize('NFKD',mot)
-	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
-#Hello world
 
-def chiffrer(message: str, cle: int):
-	# TODO: retourner la chaîne chiffrée (type str).
-	# Exigences visibles dans taests/test_caesar.py :
-	# - test_cesar_officiel_cle_42
-	# - test_cesar_officiel_cle_neg_42
-	# - test_cesar_cle_zero_identite
-	# Exemples attendus par les tests :
-	# - chiffrer("Veni, vidi, vici!", 42) -> "Ludy, lyty, lysy!"
-	# - chiffrer("Veni, vidi, vici!", -42) -> "Foxs, fsns, fsms!"
-	# - chiffrer("Tout pareil.", 0) -> "Tout pareil."
+
+mot = str(input("Entrez un mot : "))
+
+cle = int(input("Entrez une clé : "))
+
+resultat = chiffrer(mot, cle)
+
+print("Mot chiffré :", resultat)
+
+def chiffrer(mot: str, cle: int):
+
+	# parcourir chaque lettre du mot
+	for lettre in mot:
+		# convertir en minuscule
+		lettre = lettre.lower()
+
+		# vérifier si c'est une lettre
+		if lettre in mot:
+	# trouver sa position
+	position = mot.find(lettre)
+
 	pass
 
+	import string
+	alphabet = string.ascii_lowercase
 
-def dechiffrer(message: str, cle: int):
+	def dechiffrer(mot: str, cle: int):
+
+		resultat = []
+
+		for caractere in mot:
+
+			# Vérifier si le caractère est une lettre
+			if caractere.lower() in alphabet:
+
+				# Trouver la position de la lettre
+				position = alphabet.find(caractere.lower())
+
+				# Décalage inverse
+				nouvelle_position = (position - cle) % 26
+				# Nouvelle lettre
+				nouvelle_lettre = alphabet[nouvelle_position]
+
+				resultat.append(nouvelle_lettre)
+
+			else:
+				# Garder espaces et symboles
+				resultat.append(caractere)
+
+		return resultat
+
 	# TODO: retourner la chaîne déchiffrée (type str).
 	# Exigence visible dans tests/test_caesar.py :
 	# - test_cesar_round_trip
