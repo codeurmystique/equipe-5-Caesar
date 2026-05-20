@@ -47,6 +47,14 @@ def dechiffrer(message: str, cle: int):
 	pass
 
 
+# demander 3 cles
+
+cle1 = int(input("Entrez clé 1 : "))
+cle2 = int(input("Entrez clé 2 : "))
+cle3 = int(input("Entrez clé 3 : "))
+
+# mettre les clés dans une liste
+cles = [cle1, cle2, cle3]
 def enigma_chiffrer(mot,cles):
 
 alphabet = string.ascii_lowercase
