@@ -1,61 +1,79 @@
 """
 MGA802 — Mini-Projet A : Chiffrement de César
-Squelette de départ pour votre équipe.
 """
 import argparse
+# On importe le module string parce qu'il contient des chaînes utiles,
+# comme l'alphabet en minuscules et l'alphabet en majuscules.
 import string
 
-#Alphabet utilisé pour le chiffrement
-alphabet = string.ascii_lowercase
+# Constante contenant toutes les lettres minuscules de l'alphabet anglais.
+# On l'utilise pour trouver la position d'une lettre minuscule.
+ALPHABET_MIN = string.ascii_lowercase  # "abcdefghijklmnopqrstuvwxyz"
 
 
-def chiffrer(message: str, cle: int):
-	"""
-	Chiffre un message avec le chiffrement de César.
-	Paramètres:
-	 message (str) : texte à chiffrer.
-	 clé (int) : décalage à appliquer
-	 	"""
-	# TODO: retourner la chaîne chiffrée (type str).
+# Constante contenant toutes les lettres majuscules de l'alphabet anglais.
+# On l'utilise pour préserver les majuscules pendant le chiffrement.
+ALPHABET_MAJ = string.ascii_uppercase  # "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-	#Transformer le message en minuscules
-	message = message.lower()
 
-	# Variable qui contiendra le résultat final
-	resultat = ""
+def chiffrer(message: str, cle: int) -> str:
+    """
+    Chiffre un message avec le chiffrement de César.
 
-	# Parcourir chaque caractère du message
-	for caractere in message:
+    Paramètres :
+        message : le texte à chiffrer
+        cle : le décalage à appliquer aux lettres
 
-		#Vérifier si le caractère est une lettre de l'àlphabet
-		if caractere in alphabet:
-			#Trouver la position actuelle de la lettre
-			position = alphabet.index(caractere)
+    Retour :
+        Le message chiffré
+    """
 
-			#Calculer la nouvelle position avec le décalage
-			nouvelle_position = (position + cle) % 26
+    # On crée une chaîne vide qui recevra progressivement le message chiffré.
+    resultat = ""
 
-			#Trouver la nouvelle lettre
-			nouvelle_lettre = alphabet[nouvelle_position]
+    # On parcourt chaque caractère du message original, un par un.
+    for caractere in message:
 
-			#Ajouter la lettre chiffrée au résultat
-			resultat += nouvelle_lettre
+        # Si le caractère est une lettre minuscule, on applique le décalage
+        # dans l'alphabet minuscule.
+        if caractere in ALPHABET_MIN:
 
-		else:
-			#Garder les espace et ponctuations inchangés
-			resultat += caractere
-	#Retourner le message final
-	return resultat
+            # On cherche la position de la lettre dans l'alphabet.
+            # Exemple : "a" est à la position 0, "b" à 1, "c" à 2.
+            position = ALPHABET_MIN.find(caractere)
 
-	# Exigences visibles dans tests/test_caesar.py :
-	# - test_cesar_officiel_cle_42
-	# - test_cesar_officiel_cle_neg_42
-	# - test_cesar_cle_zero_identite
-	# Exemples attendus par les tests :
-	# - chiffrer("Veni, vidi, vici!", 42) -> "Ludy, lyty, lysy!"
-	# - chiffrer("Veni, vidi, vici!", -42) -> "Foxs, fsns, fsms!"
-	# - chiffrer("Tout pareil.", 0) -> "Tout pareil."
-	pass
+            # On calcule la nouvelle position après le décalage.
+            # Le modulo 26 permet de revenir au début de l'alphabet
+            # si on dépasse la lettre "z".
+            nouvelle_position = (position + cle) % 26
+
+            # On récupère la nouvelle lettre à cette position
+            # et on l'ajoute au résultat.
+            resultat += ALPHABET_MIN[nouvelle_position]
+
+        # Si le caractère est une lettre majuscule, on applique la même logique
+        # mais avec l'alphabet majuscule pour préserver la casse.
+        elif caractere in ALPHABET_MAJ:
+
+            # On cherche la position de la lettre majuscule.
+            position = ALPHABET_MAJ.find(caractere)
+
+            # On calcule la nouvelle position avec le même principe.
+            nouvelle_position = (position + cle) % 26
+
+            # On ajoute la nouvelle lettre majuscule au résultat.
+            resultat += ALPHABET_MAJ[nouvelle_position]
+
+        # Si le caractère n'est pas une lettre de l'alphabet,
+        # par exemple une virgule, un espace, un accent ou un point,
+        # on le garde tel quel.
+        else:
+            resultat += caractere
+
+    # Quand tous les caractères ont été traités,
+    # on retourne le message chiffré complet.
+    return resultat
+
 
 
 def dechiffrer(message: str, cle: int):
@@ -202,4 +220,3 @@ if __name__ == "__main__":
 	# Pour les tests : pytest importe ce fichier mais ne lance pas main()
 	# (car __name__ ne vaut pas "__main__" lors d'un import).
 	main()
-
