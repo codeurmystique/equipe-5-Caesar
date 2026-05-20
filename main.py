@@ -3,9 +3,6 @@ MGA802 — Mini-Projet A : Chiffrement de César
 Squelette de départ pour votre équipe.
 """
 import argparse
-
-
-
 mot = str(input("Entrez un mot : "))
 
 cle = int(input("Entrez une clé : "))
@@ -56,10 +53,6 @@ def chiffrer(mot: str, cle: int):
 
 		return resultat
 
-	# TODO: retourner la chaîne déchiffrée (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_cesar_round_trip
-	# Le test vérifie que dechiffrer(chiffrer(msg, 7), 7) == msg.
 	pass
 
 
