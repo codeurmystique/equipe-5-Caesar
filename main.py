@@ -18,32 +18,48 @@ resultat = chiffrer(mot, cle)
 
 print("Mot chiffré :", resultat)
 
+def chiffrer(mot: str, cle: int):
 
-def chiffrer(mot, cle):
+	# parcourir chaque lettre du mot
+	for lettre in mot:
+		# convertir en minuscule
+		lettre = lettre.lower()
 
-alphabet = string.ascii_lowercase
-
-# parcourir chaque lettre du mot
-
-for lettre in mot:
-#convertir en minuscule
-	lettre = lettre.lower()
-
-# vérifier si c'est une lettre
-	if lettre in alphabet:
-# trouver sa position
-position = alphabet.find(lettre)
-
-
+		# vérifier si c'est une lettre
+		if lettre in mot:
+	# trouver sa position
+	position = mot.find(lettre)
 
 	pass
 
+	import string
+	alphabet = string.ascii_lowercase
 
-def dechiffrer(message: str, cle: int):
-	# TODO: retourner la chaîne déchiffrée (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_cesar_round_trip
-	# Le test vérifie que dechiffrer(chiffrer(msg, 7), 7) == msg.
+	def dechiffrer(mot: str, cle: int):
+
+		resultat = []
+
+		for caractere in mot:
+
+			# Vérifier si le caractère est une lettre
+			if caractere.lower() in mot :
+
+				# Trouver la position de la lettre
+				position = mot.find(caractere.lower())
+
+				# Décalage inverse
+				nouvelle_position = (position - cle) % 26
+				# Nouvelle lettre
+				nouvelle_lettre = mot[nouvelle_position]
+
+				resultat.append(nouvelle_lettre)
+
+			else:
+				# Garder espaces et symboles
+				resultat.append(caractere)
+
+		return resultat
+
 	pass
 
 
