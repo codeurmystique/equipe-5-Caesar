@@ -47,12 +47,25 @@ def dechiffrer(message: str, cle: int):
 	pass
 
 
-def enigma_chiffrer(message: str, cles):
-	# TODO: retourner la chaîne chiffrée Enigma César (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_enigma_officiel_maison
-	# Exemple attendu par le test :
-	# - enigma_chiffrer("MAISON", (7, 16, 9)) -> "TQRZEW"
+def enigma_chiffrer(mot,cles):
+
+alphabet = string.ascii_lowercase
+
+#verifier que c est une cle de 3
+
+if len(cles)!= 3:
+	return "vous devez utiliser uniquement 3 cles"
+
+# parcourir chaque lettre  du meot
+
+for lettre in message:
+
+# transformer la lettre en minuscule
+		lettre = lettre.lower()
+
+# vérifier si le caractère est une lettre
+		if lettre in alphabet:
+
 	pass
 
 
