@@ -55,6 +55,7 @@ cle3 = int(input("Entrez clé 3 : "))
 
 # mettre les clés dans une liste
 cles = [cle1, cle2, cle3]
+
 def enigma_chiffrer(mot,cles):
 
 alphabet = string.ascii_lowercase
@@ -66,7 +67,7 @@ if len(cles)!= 3:
 
 # parcourir chaque lettre  du meot
 
-for lettre in message:
+for lettre in mot:
 
 # transformer la lettre en minuscule
 		lettre = lettre.lower()
