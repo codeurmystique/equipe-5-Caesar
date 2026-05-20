@@ -3,6 +3,13 @@ MGA802 — Mini-Projet A : Chiffrement de César
 Squelette de départ pour votre équipe.
 """
 import argparse
+
+# demander a l`utilisateur de saisir un mot et une cle
+def enlever_les_carateres_speciaux(mot):
+	import unicodedata
+	normalized_word=unicodedata.normalize('NFKD',mot)
+	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
+
 mot = str(input("Entrez un mot : "))
 
 cle = int(input("Entrez une clé : "))
@@ -56,12 +63,34 @@ def chiffrer(mot: str, cle: int):
 	pass
 
 
-def enigma_chiffrer(message: str, cles):
-	# TODO: retourner la chaîne chiffrée Enigma César (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_enigma_officiel_maison
-	# Exemple attendu par le test :
-	# - enigma_chiffrer("MAISON", (7, 16, 9)) -> "TQRZEW"
+# demander 3 cles
+
+cle1 = int(input("Entrez clé 1 : "))
+cle2 = int(input("Entrez clé 2 : "))
+cle3 = int(input("Entrez clé 3 : "))
+
+# mettre les clés dans une liste
+cles = [cle1, cle2, cle3]
+
+def enigma_chiffrer(mot,cles):
+
+alphabet = string.ascii_lowercase
+
+#verifier que c est une cle de 3
+
+if len(cles)!= 3:
+	return "vous devez utiliser uniquement 3 cles"
+
+# parcourir chaque lettre  du meot
+
+for lettre in mot:
+
+# transformer la lettre en minuscule
+		lettre = lettre.lower()
+
+# vérifier si le caractère est une lettre
+		if lettre in alphabet:
+
 	pass
 
 
