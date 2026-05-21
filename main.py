@@ -63,35 +63,43 @@ def chiffrer(mot: str, cle: int):
 	pass
 
 
-# demander 3 cles
+def enigma_chiffrer(message: str, cles):
+	if len(cles)!=3:
+		return "Tu dois utiliser exactement  3 clés "
+	resultat=[]
 
-cle1 = int(input("Entrez clé 1 : "))
-cle2 = int(input("Entrez clé 2 : "))
-cle3 = int(input("Entrez clé 3 : "))
+	#Compteur indice
+	index_cle=0
+	#parcourir chaque lettre
+	for lettre in mot:
+		lettre_min=lettre.lower()
+	#Vérifier si une lettre alphabitique
+	if lettre_min in alphabet :
 
-# mettre les clés dans une liste
-cles = [cle1, cle2, cle3]
+		#choisir la clé
+	cle=cle[index_cle %3 ]
 
-def enigma_chiffrer(mot,cles):
+	#position de la lettre
+	position=alphabet.find(lettre_min)
 
-alphabet = string.ascii_lowercase
+	#Attribuer la nouvelle posistion
+	nouvelle_position=(position+cle)%26
 
-#verifier que c est une cle de 3
+	#Recuperer la nouvelle position
+	nouvelle_lettre=alphabet[nouvelle_position]
 
-if len(cles)!= 3:
-	return "vous devez utiliser uniquement 3 cles"
+	#conserver les majuscules
+	if lettre.isupper():
+		nouvelle_lettre=nouvelle_lettre.upper()
+		resultat.append(nouvelle_lettre)
 
-# parcourir chaque lettre  du meot
+    #Passer à un autre clés
+	index_cle+=1
+	else:
+	resultat.append(lettre)
 
-for lettre in mot:
-
-# transformer la lettre en minuscule
-		lettre = lettre.lower()
-
-# vérifier si le caractère est une lettre
-		if lettre in alphabet:
-
-	pass
+	return ""join(resultat)
+   pass
 
 
 def _parse_cle(texte: str):
@@ -122,6 +130,27 @@ def _parse_cle(texte: str):
 		return tuple(int(x) for x in texte.split("-"))
 	# Sinon, c'est une clé César simple : on convertit en entier.
 	return int(texte)
+#convertir la clé entrée par l'utilisateur
+cle=_parse_cle(args.cle)
+
+#choisir l'action nécessaire
+
+if args.action="chiffrer" :
+	#Appeler la fonction chiffrer
+	resultat=chiffrer(args.message,cle)
+	print(resultat)
+
+elif args.action="dechiffrer" :
+	#Appeler la fonction dechiffrer
+    resultat=dechiffrer(args.message,cle)
+	print(resultat)
+
+else:
+
+	#Appeler la fonction enigma
+    resultat=enigma_chiffrer(args.message,cle)
+	print(resultat)
+
 
 def main(argv=None):
 	"""Point d'entrée principal du programme en ligne de commande.
