@@ -85,6 +85,25 @@ def dechiffrer(message: str, cle: int) -> str:
 
     return chiffrer(message, -cle)
 
+def brute_force_cesar(message: str) -> dict:
+    """
+    Teste toutes les clés possibles du chiffrement de César.
+
+    Paramètre :
+        message : le message chiffré
+
+    Retour :
+        Un dictionnaire contenant chaque clé testée et le message déchiffré correspondant.
+    """
+
+    resultats = {}
+
+    for cle in range(26):
+        message_dechiffre = dechiffrer(message, cle)
+        resultats[cle] = message_dechiffre
+
+    return resultats
+
 
 def enigma_chiffrer(message: str, cles):
 	# TODO: retourner la chaîne chiffrée Enigma César (type str).
@@ -155,8 +174,8 @@ def main(argv=None):
 	# - Doit être l'une des valeurs listées dans "choices"
 	parser.add_argument(
 		"action",
-		choices=["chiffrer", "dechiffrer", "enigma"],
-		help="Opération à effectuer (chiffrer, dechiffrer ou enigma).")
+		choices=["chiffrer", "dechiffrer", "bruteforce", "enigma"],
+		help="Opération à effectuer (chiffrer, dechiffrer, bruteforce ou enigma).")
 
 	# Argument positionnel "message" : le texte à traiter.
 	# - Obligatoire
@@ -198,6 +217,9 @@ def main(argv=None):
 	elif args.action == "dechiffrer":
 		# L'utilisateur veut déchiffrer : on appelle dechiffrer()
 		resultat = dechiffrer(args.message, cle)
+	elif args.action == "bruteforce":
+		# L'utilisateur veut utiliser la force brute César : on appelle brute_force_cesar()
+		resultat = brute_force_cesar(args.message)
 	else:  # args.action == "enigma"
 		# L'utilisateur veut utiliser Enigma César : on appelle enigma_chiffrer()
 		resultat = enigma_chiffrer(args.message, cle)
