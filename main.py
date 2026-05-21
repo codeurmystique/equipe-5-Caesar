@@ -3,6 +3,13 @@ MGA802 — Mini-Projet A : Chiffrement de César
 Squelette de départ pour votre équipe.
 """
 import argparse
+
+# demander a l`utilisateur de saisir un mot et une cle
+def enlever_les_carateres_speciaux(mot):
+	import unicodedata
+	normalized_word=unicodedata.normalize('NFKD',mot)
+	return ''join ([char for char in normalized_word if not unicodedata.combining(char)])
+
 mot = str(input("Entrez un mot : "))
 
 cle = int(input("Entrez une clé : "))
