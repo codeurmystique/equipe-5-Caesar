@@ -75,13 +75,15 @@ def chiffrer(message: str, cle: int) -> str:
     return resultat
 
 
+def dechiffrer(message: str, cle: int) -> str:
+    """
+    Déchiffre un message chiffré avec le chiffrement de César.
 
-def dechiffrer(message: str, cle: int):
-	# TODO: retourner la chaîne déchiffrée (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_cesar_round_trip
-	# Le test vérifie que dechiffrer(chiffrer(msg, 7), 7) == msg.
-	pass
+    Le déchiffrement applique le décalage inverse.
+    Si le chiffrement utilise +cle, le déchiffrement utilise -cle.
+    """
+
+    return chiffrer(message, -cle)
 
 
 def enigma_chiffrer(message: str, cles):
