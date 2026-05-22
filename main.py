@@ -4,6 +4,12 @@ Bienvennue au script d'automatisation du chiffrement/dechiffrement par décalage
 """
 import argparse
 import unicodedata
+import string
+
+#Variable global pour simplifier l'acces dans les fonctions
+
+alphabet = string.ascii_lowercase
+
 
 #Séparer les lettres de leurs accents
 
@@ -26,46 +32,30 @@ print("Mot chiffré :", resultat)
 
 def chiffrer(mot: str, cle: int):
 
-	# parcourir chaque lettre du mot
-	for lettre in mot:
-		# convertir en minuscule
-		lettre = lettre.lower()
+	for lettre in mot_normalise:
+		lettre_min = lettre.lower()
 
-		# vérifier si c'est une lettre
-		if lettre in mot:
-	# trouver sa position
-	position = mot.find(lettre)
+		if lettre_min in alphabet:
+			# Trouver la position dans l'alphabet
+			position = alphabet.find(lettre_min)
+			# Appliquer le décalage modulo 26
+			nouvelle_position = (position + cle) % 26
+			nouvelle_lettre = alphabet[nouvelle_position]
+			# Conserver la majuscule d'origine
+			if lettre.isupper():
+				nouvelle_lettre = nouvelle_lettre.upper()
+			message_chiffre.append(nouvelle_lettre)
+		else:
+			# Garder les espaces, chiffres et symboles
+			message_chiffre.append(lettre)
+
+	return "".join(message_chiffre)
 
 	pass
 
-	import string
-	alphabet = string.ascii_lowercase
+  def dechiffrer (mot: str, cle: int):
 
-	def dechiffrer(mot: str, cle: int):
-
-		resultat = []
-
-		for caractere in mot:
-
-			# Vérifier si le caractère est une lettre
-			if caractere.lower() in mot :
-
-				# Trouver la position de la lettre
-				position = mot.find(caractere.lower())
-
-				# Décalage inverse
-				nouvelle_position = (position - cle) % 26
-				# Nouvelle lettre
-				nouvelle_lettre = mot[nouvelle_position]
-
-				resultat.append(nouvelle_lettre)
-
-			else:
-				# Garder espaces et symboles
-				resultat.append(caractere)
-
-		return resultat
-
+	retrun chiffrer(mot,-cle)
 	pass
 
 
