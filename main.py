@@ -1,14 +1,27 @@
 """
 MGA802 — Mini-Projet A : Chiffrement de César
-Squelette de départ pour votre équipe.
+Bienvennue au script d'automatisation du chiffrement/dechiffrement par décalage
 """
 import argparse
+import unicodedata
+
+#Séparer les lettres de leurs accents
+
+def enlever_les_carateres_speciaux(mot):
+	mot_normalise=unicodedata.normalize('NFKD',mot)
+	mot_norml=[]
+#Filtrer pour ne garder que les vraies lettres
+	for char in mot_normalise:
+		if not unicodedata.combining(char):
+			mot_norml.append(char)
+
+	return "" .join(mot_norml)
+
+# demander a l`utilisateur de saisir un mot et une cle
+
 mot = str(input("Entrez un mot : "))
-
 cle = int(input("Entrez une clé : "))
-
 resultat = chiffrer(mot, cle)
-
 print("Mot chiffré :", resultat)
 
 def chiffrer(mot: str, cle: int):
