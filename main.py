@@ -10,6 +10,33 @@ import string
 # On l'utilise pour trouver la position d'une lettre minuscule.
 ALPHABET_MIN = string.ascii_lowercase  # "abcdefghijklmnopqrstuvwxyz"
 
+	import string
+	alphabet = string.ascii_lowercase
+
+	def dechiffrer(mot: str, cle: int):
+
+		resultat = []
+
+		for caractere in mot:
+
+			# Vérifier si le caractère est une lettre
+			if caractere.lower() in mot :
+
+				# Trouver la position de la lettre
+				position = mot.find(caractere.lower())
+
+				# Décalage inverse
+				nouvelle_position = (position - cle) % 26
+				# Nouvelle lettre
+				nouvelle_lettre = mot[nouvelle_position]
+
+				resultat.append(nouvelle_lettre)
+
+			else:
+				# Garder espaces et symboles
+				resultat.append(caractere)
+
+		return resultat
 
 # Constante contenant toutes les lettres majuscules de l'alphabet anglais.
 # On l'utilise pour préserver les majuscules pendant le chiffrement.
@@ -106,12 +133,42 @@ def brute_force_cesar(message: str) -> dict:
 
 
 def enigma_chiffrer(message: str, cles):
-	# TODO: retourner la chaîne chiffrée Enigma César (type str).
-	# Exigence visible dans tests/test_caesar.py :
-	# - test_enigma_officiel_maison
-	# Exemple attendu par le test :
-	# - enigma_chiffrer("MAISON", (7, 16, 9)) -> "TQRZEW"
-	pass
+	if len(cles)!=3:
+		return "Tu dois utiliser exactement  3 clés "
+	resultat=[]
+
+	#Compteur indice
+	index_cle=0
+	#parcourir chaque lettre
+	for lettre in mot:
+		lettre_min=lettre.lower()
+	#Vérifier si une lettre alphabitique
+	if lettre_min in alphabet :
+
+		#choisir la clé
+	cle=cle[index_cle %3 ]
+
+	#position de la lettre
+	position=alphabet.find(lettre_min)
+
+	#Attribuer la nouvelle posistion
+	nouvelle_position=(position+cle)%26
+
+	#Recuperer la nouvelle position
+	nouvelle_lettre=alphabet[nouvelle_position]
+
+	#conserver les majuscules
+	if lettre.isupper():
+		nouvelle_lettre=nouvelle_lettre.upper()
+		resultat.append(nouvelle_lettre)
+
+    #Passer à un autre clés
+	index_cle+=1
+	else:
+	resultat.append(lettre)
+
+	return ""join(resultat)
+   pass
 
 
 def _parse_cle(texte: str):
@@ -142,6 +199,27 @@ def _parse_cle(texte: str):
 		return tuple(int(x) for x in texte.split("-"))
 	# Sinon, c'est une clé César simple : on convertit en entier.
 	return int(texte)
+#convertir la clé entrée par l'utilisateur
+cle=_parse_cle(args.cle)
+
+#choisir l'action nécessaire
+
+if args.action="chiffrer" :
+	#Appeler la fonction chiffrer
+	resultat=chiffrer(args.message,cle)
+	print(resultat)
+
+elif args.action="dechiffrer" :
+	#Appeler la fonction dechiffrer
+    resultat=dechiffrer(args.message,cle)
+	print(resultat)
+
+else:
+
+	#Appeler la fonction enigma
+    resultat=enigma_chiffrer(args.message,cle)
+	print(resultat)
+
 
 def main(argv=None):
 	"""Point d'entrée principal du programme en ligne de commande.
