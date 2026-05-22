@@ -23,13 +23,7 @@ def enlever_les_carateres_speciaux(mot):
 
 	return "" .join(mot_norml)
 
-# demander a l`utilisateur de saisir un mot et une cle
-
-mot = str(input("Entrez un mot : "))
-cle = int(input("Entrez une clé : "))
-resultat = chiffrer(mot, cle)
-print("Mot chiffré :", resultat)
-
+# Introduire une fonction chiffrer
 def chiffrer(mot: str, cle: int):
 	#Chiffrer un message en appliquant le decalage de césar
 	message_chiffre = []
@@ -53,35 +47,36 @@ def chiffrer(mot: str, cle: int):
 
 	return "".join(message_chiffre)
 
-	pass
+
 #fonction de dechiffrage qui n'est rien d'autre que chiffrer avec clé négative
-  def dechiffrer (mot: str, cle: int):
 
+  def dechiffrer(mot: str,cles:int):
 	retrun chiffrer(mot,-cle)
-	pass
-
 
 def enigma_chiffrer(message: str, cles):
 	if len(cles)!=3:
 		return "Tu dois utiliser exactement  3 clés "
+	message_normalise = enlever_les_caracteres_speciaux(message)
+	# Compteur indice
+	index_cle = 0
 	resultat=[]
 
-	#Compteur indice
-	index_cle=0
 	#parcourir chaque lettre
-	for lettre in mot:
+	for lettre in message_normalise:
 		lettre_min=lettre.lower()
+
 	#Vérifier si une lettre alphabitique
 	if lettre_min in alphabet :
 
 		#choisir la clé
-	cle=cle[index_cle %3 ]
+
+	cle_actuelle=cles[index_cle %3 ]
 
 	#position de la lettre
 	position=alphabet.find(lettre_min)
 
 	#Attribuer la nouvelle posistion
-	nouvelle_position=(position+cle)%26
+	nouvelle_position=(position+cle_actuelle)%26
 
 	#Recuperer la nouvelle position
 	nouvelle_lettre=alphabet[nouvelle_position]
@@ -97,7 +92,7 @@ def enigma_chiffrer(message: str, cles):
 	resultat.append(lettre)
 
 	return ""join(resultat)
-   pass
+
 
 
 def _parse_cle(texte: str):
@@ -239,13 +234,11 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-	# Ce bloc s'exécute SEULEMENT si ce fichier est lancé directement depuis le terminal.
-	# Exemple : python main.py chiffrer "Veni" --cle 42
-	#
-	# Il ne s'exécute PAS si on fait "import main" depuis un autre fichier Python.
-	# Cela permet d'utiliser le code de main.py dans d'autres projets sans lancer main().
-	# 
-	# Pour les tests : pytest importe ce fichier mais ne lance pas main()
-	# (car __name__ ne vaut pas "__main__" lors d'un import).
+	main()
+	print("--- Mode Interactif ---")
+	mot_utilisateur = str(input("Entrez un mot à ton choix  : "))
+	cle_utilisateur = int(input("Entrez une clé : "))
+	resultat_chiffre = chiffrer(mot_utilisateur, cle_utilisateur)
+	print("Mot chiffré :", resultat_chiffre)
 	main()
 
