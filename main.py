@@ -12,15 +12,15 @@ ALPHABET= string.ascii_lowercase
 
 #Séparer les lettres de leurs accents
 
-def enlever_les_carateres_speciaux(mot):
-	mot_normalise=unicodedata.normalize('NFKD',mot)
-	mot_norml=[]
+def enlever_accents(mot:str):
+	mot=unicodedata.normalize('NFKD',mot)
+	resultat=[]
 #Filtrer pour ne garder que les vraies lettres
-	for char in mot_normalise:
+	for char in texte:
 		if not unicodedata.combining(char):
-			mot_norml.append(char)
+			resuktat+=char
 
-	return "" .join(mot_norml)
+	return resultat
 
 # Introduire une fonction chiffrer
 def chiffrer(mot: str, cles: int):
