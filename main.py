@@ -99,7 +99,7 @@ def enigma_chiffrer(message: str, cles):
 	return ""join(resultat)
    pass
 
-# Fonction qui Essaye toutes les clés possibles du chiffrement César pour trouver le message original
+# Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
 
 def brute_force_cesar(message: str):
 	resultat = []
