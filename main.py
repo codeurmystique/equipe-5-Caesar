@@ -109,7 +109,7 @@ def brute_force_cesar(message: str):
 		resultat.append((cle, texte))
 	return resultat
 
-# Fonction qui Essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
+# Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
 
 def brute_force_enigma(message: str):
 	resultats = []
