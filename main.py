@@ -8,8 +8,7 @@ import string
 
 #Variable global pour simplifier l'acces dans les fonctions
 
-alphabet = string.ascii_lowercase
-
+ALPHABET= string.ascii_lowercase
 
 #Séparer les lettres de leurs accents
 
@@ -24,7 +23,7 @@ def enlever_les_carateres_speciaux(mot):
 	return "" .join(mot_norml)
 
 # Introduire une fonction chiffrer
-def chiffrer(mot: str, cle: int):
+def chiffrer(mot: str, cles: int):
 	#Chiffrer un message en appliquant le decalage de césar
 	message_chiffre = []
 	mot_normalise = enlever_les_caracteres_speciaux(mot)
@@ -35,7 +34,7 @@ def chiffrer(mot: str, cle: int):
 			# Trouver la position dans l'alphabet
 			position = alphabet.find(lettre_min)
 			# Appliquer le décalage modulo 26
-			nouvelle_position = (position + cle) % 26
+			nouvelle_position = (position + cles) % 26
 			nouvelle_lettre = alphabet[nouvelle_position]
 			# Conserver la majuscule d'origine
 			if lettre.isupper():
@@ -235,10 +234,5 @@ def main(argv=None):
 
 if __name__ == "__main__":
 	main()
-	print("--- Mode Interactif ---")
-	mot_utilisateur = str(input("Entrez un mot à ton choix  : "))
-	cle_utilisateur = int(input("Entrez une clé : "))
-	resultat_chiffre = chiffrer(mot_utilisateur, cle_utilisateur)
-	print("Mot chiffré :", resultat_chiffre)
-	main()
+
 
