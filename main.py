@@ -16,36 +16,39 @@ def enlever_accents(mot:str):
 	mot=unicodedata.normalize('NFKD',mot)
 	resultat=[]
 #Filtrer pour ne garder que les vraies lettres
-	for char in texte:
+	for char in mot:
 		if not unicodedata.combining(char):
-			resuktat+=char
+			resultat+=char
 
-	return resultat
+	return mot
 
 # Introduire une fonction chiffrer
 def chiffrer(mot: str, cles: int):
-	#Chiffrer un message en appliquant le decalage de césar
-	message_chiffre = []
-	mot_normalise = enlever_les_caracteres_speciaux(mot)
-	for lettre in mot_normalise:
-		lettre_min = lettre.lower()
 
-		if lettre_min in alphabet:
-			# Trouver la position dans l'alphabet
-			position = alphabet.find(lettre_min)
-			# Appliquer le décalage modulo 26
-			nouvelle_position = (position + cles) % 26
-			nouvelle_lettre = alphabet[nouvelle_position]
-			# Conserver la majuscule d'origine
-			if lettre.isupper():
-				nouvelle_lettre = nouvelle_lettre.upper()
-			message_chiffre.append(nouvelle_lettre)
-		else:
-			# Garder les espaces, chiffres et symboles
-			message_chiffre.append(lettre)
+	#Chiffrer le mot en appliquant le decalage de césar
+	mot= enlever_accents(mot.lower())
+	resultat= ""
+	for lettre in mot:
+		if letttre in ALPHABET:
 
-	return "".join(message_chiffre)
+			position=ALPHABET.find(lettre)
 
+			#Introduire une nouvelle position et appliquer le decalage modulo 26
+
+			nouvelle_position = nouvelle_position = (position + cles) % 26
+
+			#Introduire une nouvelle lettre
+			nouvelle_lettre = ALPHABET[nouvelle_position]
+
+			# le resultat si lettre trouvé dans ALPHABET prend la nouvelle lettre
+		    resultat+=nouvelle_lettre
+
+		   #sinon resultat conserve la lettre
+
+        else:
+			resultat+=lettre
+
+		return resultat
 
 #fonction de dechiffrage qui n'est rien d'autre que chiffrer avec clé négative
 
