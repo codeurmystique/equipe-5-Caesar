@@ -99,6 +99,40 @@ def enigma_chiffrer(message: str, cles):
 	return ""join(resultat)
    pass
 
+# Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
+
+def brute_force_cesar(message: str):
+	resultat = []
+# Tester toutes les clés possibles de 0 à 25
+	for cle in range(26):
+		texte = dechiffrer(message, cle)
+		resultat.append((cle, texte))
+	return resultat
+
+# Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
+
+def brute_force_enigma(message: str):
+	resultats = []
+
+# Tester toutes les valeurs possibles pour la première clé
+	for cle1 in range(26):
+
+# Tester toutes les valeurs possibles pour la deuxième clé
+		for cle2 in range(26):
+
+# Tester toutes les valeurs possibles pour la troisième clé
+			for cle3 in range(26):
+
+# Créer un tuple contenant les 3 clés
+				cles = (cle1, cle2, cle3)
+
+# Déchiffrer le message
+# On utilise les clés négatives pour inverser le chiffrement
+texte = enigma_chiffrer(message,(-cle1, -cle2, -cle3))
+resultats.append((cles, texte))
+
+	return resultats
+
 
 def _parse_cle(texte: str):
 	"""Convertit l'argument --cle en clé utilisable.
