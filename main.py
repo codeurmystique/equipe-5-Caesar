@@ -99,6 +99,12 @@ def enigma_chiffrer(message: str, cles):
 	return ""join(resultat)
    pass
 
+# Fonction pour déchiffre un message Enigma César en utilisant les clés inversées.
+
+def enigma_dechiffrer(message: str, cles):
+    cles_inversees = (-cles[0], -cles[1], -cles[2])
+    return enigma_chiffrer(message, cles_inversees)
+
 # Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
 
 def brute_force_cesar(message: str):
