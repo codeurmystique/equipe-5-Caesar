@@ -31,7 +31,9 @@ resultat = chiffrer(mot, cle)
 print("Mot chiffré :", resultat)
 
 def chiffrer(mot: str, cle: int):
-
+	#Chiffrer un message en appliquant le decalage de césar
+	message_chiffre = []
+	mot_normalise = enlever_les_caracteres_speciaux(mot)
 	for lettre in mot_normalise:
 		lettre_min = lettre.lower()
 
@@ -52,7 +54,7 @@ def chiffrer(mot: str, cle: int):
 	return "".join(message_chiffre)
 
 	pass
-
+#fonction de dechiffrage qui n'est rien d'autre que chiffrer avec clé négative
   def dechiffrer (mot: str, cle: int):
 
 	retrun chiffrer(mot,-cle)
