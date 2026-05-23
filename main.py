@@ -8,80 +8,77 @@ import string
 
 #Variable global pour simplifier l'acces dans les fonctions
 
-alphabet = string.ascii_lowercase
-
+ALPHABET= string.ascii_lowercase
 
 #Séparer les lettres de leurs accents
 
-def enlever_les_carateres_speciaux(mot):
-	mot_normalise=unicodedata.normalize('NFKD',mot)
-	mot_norml=[]
+def enlever_accents(mot:str):
+	mot=unicodedata.normalize('NFKD',mot)
+	resultat=[]
 #Filtrer pour ne garder que les vraies lettres
-	for char in mot_normalise:
+	for char in mot:
 		if not unicodedata.combining(char):
-			mot_norml.append(char)
+			resultat+=char
 
-	return "" .join(mot_norml)
+	return mot
 
-# demander a l`utilisateur de saisir un mot et une cle
+# Introduire une fonction chiffrer
+def chiffrer(mot: str, cles: int):
 
-mot = str(input("Entrez un mot : "))
-cle = int(input("Entrez une clé : "))
-resultat = chiffrer(mot, cle)
-print("Mot chiffré :", resultat)
+	#Chiffrer le mot en appliquant le decalage de césar
+	mot= enlever_accents(mot.lower())
+	resultat= ""
+	for lettre in mot:
+		if letttre in ALPHABET:
 
-def chiffrer(mot: str, cle: int):
-	#Chiffrer un message en appliquant le decalage de césar
-	message_chiffre = []
-	mot_normalise = enlever_les_caracteres_speciaux(mot)
-	for lettre in mot_normalise:
-		lettre_min = lettre.lower()
+			position=ALPHABET.find(lettre)
 
-		if lettre_min in alphabet:
-			# Trouver la position dans l'alphabet
-			position = alphabet.find(lettre_min)
-			# Appliquer le décalage modulo 26
-			nouvelle_position = (position + cle) % 26
-			nouvelle_lettre = alphabet[nouvelle_position]
-			# Conserver la majuscule d'origine
-			if lettre.isupper():
-				nouvelle_lettre = nouvelle_lettre.upper()
-			message_chiffre.append(nouvelle_lettre)
-		else:
-			# Garder les espaces, chiffres et symboles
-			message_chiffre.append(lettre)
+			#Introduire une nouvelle position et appliquer le decalage modulo 26
 
-	return "".join(message_chiffre)
+			nouvelle_position = nouvelle_position = (position + cles) % 26
 
-	pass
+			#Introduire une nouvelle lettre
+			nouvelle_lettre = ALPHABET[nouvelle_position]
+
+			# le resultat si lettre trouvé dans ALPHABET prend la nouvelle lettre
+		    resultat+=nouvelle_lettre
+
+		   #sinon resultat conserve la lettre
+
+        else:
+			resultat+=lettre
+
+		return resultat
+
 #fonction de dechiffrage qui n'est rien d'autre que chiffrer avec clé négative
-  def dechiffrer (mot: str, cle: int):
 
+  def dechiffrer(mot: str,cles:int):
 	retrun chiffrer(mot,-cle)
-	pass
-
 
 def enigma_chiffrer(message: str, cles):
 	if len(cles)!=3:
 		return "Tu dois utiliser exactement  3 clés "
+	message_normalise = enlever_les_caracteres_speciaux(message)
+	# Compteur indice
+	index_cle = 0
 	resultat=[]
 
-	#Compteur indice
-	index_cle=0
 	#parcourir chaque lettre
-	for lettre in mot:
+	for lettre in message_normalise:
 		lettre_min=lettre.lower()
+
 	#Vérifier si une lettre alphabitique
 	if lettre_min in alphabet :
 
 		#choisir la clé
-	cle=cle[index_cle %3 ]
+
+	cle_actuelle=cles[index_cle %3 ]
 
 	#position de la lettre
 	position=alphabet.find(lettre_min)
 
 	#Attribuer la nouvelle posistion
-	nouvelle_position=(position+cle)%26
+	nouvelle_position=(position+cle_actuelle)%26
 
 	#Recuperer la nouvelle position
 	nouvelle_lettre=alphabet[nouvelle_position]
@@ -97,7 +94,7 @@ def enigma_chiffrer(message: str, cles):
 	resultat.append(lettre)
 
 	return ""join(resultat)
-   pass
+
 
 # Fonction pour déchiffre un message Enigma César en utilisant les clés inversées.
 
@@ -279,13 +276,6 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-	# Ce bloc s'exécute SEULEMENT si ce fichier est lancé directement depuis le terminal.
-	# Exemple : python main.py chiffrer "Veni" --cle 42
-	#
-	# Il ne s'exécute PAS si on fait "import main" depuis un autre fichier Python.
-	# Cela permet d'utiliser le code de main.py dans d'autres projets sans lancer main().
-	# 
-	# Pour les tests : pytest importe ce fichier mais ne lance pas main()
-	# (car __name__ ne vaut pas "__main__" lors d'un import).
 	main()
+
 
