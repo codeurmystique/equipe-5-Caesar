@@ -115,7 +115,7 @@ def enigma_chiffrer(message: str, cles):
 
     return ''.join(resultat)
 
-
+#fonction enigma dechiffrer 
 def enigma_dechiffrer(message: str, cles):
 
     cles_inversees = (-cles[0], -cles[1], -cles[2])
