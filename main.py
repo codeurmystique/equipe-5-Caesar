@@ -4,8 +4,10 @@ Bienvennue au script d'automatisation du chiffrement/dechiffrement par décalage
 """
 
 import argparse
-import unicodedata
+import timeit
 import string
+import unicodedata
+
 
 # Variable global pour simplifier l'acces dans les fonctions
 ALPHABET = string.ascii_lowercase
@@ -201,6 +203,34 @@ def _parse_cle(texte: str):
     # Sinon, c'est une clé César simple
     return int(texte)
 
+#Fonction de performance
+def mesurer_performance(action, message, cle):
+    """Mesure le temps d'exécution de l'action demandée en utilisant timeit."""
+    if action == "chiffrer":
+        code = lambda: chiffrer(message, cle)
+    elif action == "dechiffrer":
+        code = lambda: dechiffrer(message, cle)
+    elif action == "enigma":
+        code = lambda: enigma_chiffrer(message, cle)
+    elif action == "bruteforce_cesar":
+        code = lambda: brute_force_cesar(message)
+    elif action == "bruteforce_enigma":
+        code = lambda: brute_force_enigma(message)
+    else:
+        return
+
+    # On réduit à 1 seule répétition pour la force brute Enigma (car 17 576 boucles c'est lourd)
+    # Les autres actions s'exécutent 1 000 fois pour stabiliser la mesure
+    repetitions = 1 if "bruteforce_enigma" in action else 1000
+
+    temps_total = timeit.timeit(code, number=repetitions)
+    temps_moyen = temps_total / repetitions
+
+    print(f"\n--- Rapport de Performance (timeit) ---")
+    print(f"Action mesurée     : {action}")
+    print(f"Répétitions        : {repetitions}")
+    print(f"Temps total        : {temps_total:.6f} secondes")
+    print(f"Temps moyen / éval : {temps_moyen:.6f} secondes")
 
 def main(argv=None):
     """Point d'entrée principal du programme en ligne de commande."""
@@ -257,7 +287,7 @@ def main(argv=None):
     elif args.action == "dechiffrer":
 
         # Appeler la fonction dechiffrer
-        resultat = dechiffrer(args.message, cle)
+        resultat = dechiffrer(args.message,cle)
 
         print(resultat)
 
