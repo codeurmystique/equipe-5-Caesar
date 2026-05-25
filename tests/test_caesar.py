@@ -174,3 +174,4 @@ def test_lire_ecrire_fichier():
 #  - test brute-force César
 #  - test brute-force Enigma César
 #  - autres cas limites
+
