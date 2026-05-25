@@ -13,8 +13,9 @@ from main import chiffrer, dechiffrer, enigma_chiffrer, lire_fichier, ecrire_fic
 # 1. Test des majuscules
 # ---------------------------
 def test_majuscules():
-
-    assert chiffrer("Bonjour", 3) == chiffrer("BONJOUR", 3)
+    def test_majuscules():
+        assert chiffrer("BONJOUR", 3) == "ERQMRXU"
+        assert chiffrer("Bonjour", 3) == "Erqmrxu"
 
 
 # ---------------------------
