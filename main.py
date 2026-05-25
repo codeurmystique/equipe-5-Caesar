@@ -1,6 +1,6 @@
 """
 MGA802 — Mini-Projet A : Chiffrement de César
-Bienvennue au script d'automatisation du chiffrement/dechiffrement par décalage
+Bienvenue au script d'automatisation du chiffrement/dechiffrement par décalage
 """
 
 import argparse
@@ -9,9 +9,13 @@ import string
 import unicodedata
 
 
-# Variable global pour simplifier l'acces dans les fonctions
-ALPHABET = string.ascii_lowercase
+# Constante contenant toutes les lettres minuscules de l'alphabet anglais.
+# On l'utilise pour trouver la position d'une lettre minuscule.
+ALPHABET_MIN = string.ascii_lowercase  # "abcdefghijklmnopqrstuvwxyz"
 
+# Constante contenant toutes les lettres majuscules de l'alphabet anglais.
+# On l'utilise pour préserver les majuscules pendant le chiffrement.
+ALPHABET_MAJ = string.ascii_uppercase  # "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # Séparer les lettres de leurs accents
 def enlever_accents(mot: str):
@@ -27,39 +31,94 @@ def enlever_accents(mot: str):
     return ''.join(resultat)
 
 
-# Introduire une fonction chiffrer
-def chiffrer(mot: str, cles: int):
+def chiffrer(message: str, cle: int) -> str:
+    """
+    Chiffre un message avec le chiffrement de César.
 
-    # Chiffrer le mot en appliquant le decalage de césar
-    mot = enlever_accents(mot.lower())
+    Paramètres :
+        message : le texte à chiffrer
+        cle : le décalage à appliquer aux lettres
 
-    resultat = []
+    Retour :
+        Le message chiffré
+    """
 
-    for lettre in mot:
+    # On crée une chaîne vide qui recevra progressivement le message chiffré.
+    resultat = ""
+    message = enlever_accents(message)
 
-        if lettre in ALPHABET:
+    # On parcourt chaque caractère du message original, un par un.
+    for caractere in message:
 
-            position = ALPHABET.find(lettre)
+        # Si le caractère est une lettre minuscule, on applique le décalage
+        # dans l'alphabet minuscule.
+        if caractere in ALPHABET_MIN:
 
-            # Introduire une nouvelle position et appliquer le decalage modulo 26
-            nouvelle_position = (position + cles) % 26
+            # On cherche la position de la lettre dans l'alphabet.
+            # Exemple : "a" est à la position 0, "b" à 1, "c" à 2.
+            position = ALPHABET_MIN.find(caractere)
 
-            # Introduire une nouvelle lettre
-            nouvelle_lettre = ALPHABET[nouvelle_position]
+            # On calcule la nouvelle position après le décalage.
+            # Le modulo 26 permet de revenir au début de l'alphabet
+            # si on dépasse la lettre "z".
+            nouvelle_position = (position + cle) % 26
 
-            resultat.append(nouvelle_lettre)
+            # On récupère la nouvelle lettre à cette position
+            # et on l'ajoute au résultat.
+            resultat += ALPHABET_MIN[nouvelle_position]
 
+        # Si le caractère est une lettre majuscule, on applique la même logique
+        # mais avec l'alphabet majuscule pour préserver la casse.
+        elif caractere in ALPHABET_MAJ:
+
+            # On cherche la position de la lettre majuscule.
+            position = ALPHABET_MAJ.find(caractere)
+
+            # On calcule la nouvelle position avec le même principe.
+            nouvelle_position = (position + cle) % 26
+
+            # On ajoute la nouvelle lettre majuscule au résultat.
+            resultat += ALPHABET_MAJ[nouvelle_position]
+
+        # Si le caractère n'est pas une lettre de l'alphabet,
+        # par exemple une virgule, un espace, un accent ou un point,
+        # on le garde tel quel.
         else:
-            # sinon resultat conserve la lettre
-            resultat.append(lettre)
+            resultat += caractere
 
-    return ''.join(resultat)
+    # Quand tous les caractères ont été traités,
+    # on retourne le message chiffré complet.
+    return resultat
 
 
-# Introduire une fonction de dechiffrement
-def dechiffrer(mot: str, cles: int):
+def dechiffrer(message: str, cle: int) -> str:
+    """
+    Déchiffre un message chiffré avec le chiffrement de César.
 
-    return chiffrer(mot, -cles)
+    Le déchiffrement applique le décalage inverse.
+    Si le chiffrement utilise +cle, le déchiffrement utilise -cle.
+    """
+
+    return chiffrer(message, -cle)
+
+def brute_force_cesar(message: str) -> dict:
+    """
+    Teste toutes les clés possibles du chiffrement de César.
+
+    Paramètre :
+        message : le message chiffré
+
+    Retour :
+        Un dictionnaire contenant chaque clé testée et le message déchiffré correspondant.
+    """
+
+    resultats = {}
+
+    for cle in range(26):
+        message_dechiffre = dechiffrer(message, cle)
+        resultats[cle] = message_dechiffre
+
+    return resultats
 
 
 # Fonction Enigma César
@@ -81,19 +140,19 @@ def enigma_chiffrer(message: str, cles):
         lettre_min = lettre.lower()
 
         # Vérifier si une lettre alphabétique
-        if lettre_min in ALPHABET:
+        if lettre_min in ALPHABET_MIN:
 
             # choisir la clé
             cle_actuelle = cles[index_cle % 3]
 
             # position de la lettre
-            position = ALPHABET.find(lettre_min)
+            position = ALPHABET_MIN.find(lettre_min)
 
             # Attribuer la nouvelle position
             nouvelle_position = (position + cle_actuelle) % 26
 
             # Recuperer la nouvelle lettre
-            nouvelle_lettre = ALPHABET[nouvelle_position]
+            nouvelle_lettre = ALPHABET_MIN[nouvelle_position]
 
             # conserver les majuscules
             if lettre.isupper():
@@ -110,47 +169,17 @@ def enigma_chiffrer(message: str, cles):
     return ''.join(resultat)
 
 
+# Fonction pour déchiffre un message Enigma César en utilisant les clés inversées.
+
 def enigma_dechiffrer(message: str, cles):
-
     cles_inversees = (-cles[0], -cles[1], -cles[2])
-
     return enigma_chiffrer(message, cles_inversees)
 
-
-# Lire un fichier texte
-def lire_fichier(nom_fichier: str):
-
-    with open(nom_fichier, "r", encoding="utf-8") as fichier:
-        return fichier.read()
-
-
-def ecrire_fichier(nom_fichier: str, contenu: str):
-
-    with open(nom_fichier, "w", encoding="utf-8") as fichier:
-        fichier.write(contenu)
-
-
-# Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
-def brute_force_cesar(message: str):
-
-    resultat = []
-
-    # Tester toutes les clés possibles de 0 à 25
-    for cle in range(26):
-
-        texte = dechiffrer(message, cle)
-
-        resultat.append((cle, texte))
-
-    return resultat
 
 
 # Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
 def brute_force_enigma(message: str):
-
-    result = []
-
-    message_normalise = enlever_accents(message)
+    resultats = []
 
     # Tester toutes les valeurs possibles pour la première clé
     for cle1 in range(26):
@@ -164,15 +193,30 @@ def brute_force_enigma(message: str):
                 # Créer un tuple contenant les 3 clés
                 cles = (cle1, cle2, cle3)
 
+                # Déchiffrer le message
+                # On utilise les clés négatives pour inverser le chiffrement
                 texte = enigma_chiffrer(
-                    message_normalise,
+                    message,
                     (-cle1, -cle2, -cle3)
                 )
 
-                result.append((cles, texte))
+                resultats.append((cles, texte))
 
-    return result
+    return resultats
 
+
+# Lire un fichier texte
+def lire_fichier(nom_fichier: str):
+
+    with open(nom_fichier, "r", encoding="utf-8") as fichier:
+        return fichier.read()
+
+
+def ecrire_fichier(nom_fichier: str, contenu: str):
+
+    with open(nom_fichier, "w", encoding="utf-8") as fichier:
+        fichier.write(contenu)
+        
 
 def _parse_cle(texte: str):
     """Convertit l'argument --cle en clé utilisable.
@@ -320,13 +364,4 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-
-    import sys
-
-    if len(sys.argv) == 1:
-
-        print("Exemple d'utilisation :")
-        print('python main.py chiffrer "bonjour" -c 3')
-
-    else:
-        main()
+    main()
