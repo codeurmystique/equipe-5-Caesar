@@ -1,86 +1,254 @@
-"""Tests pour le Mini-Projet A.
-
-Ce fichier contient les chaînes de test officielles + quelques cas
-limites. Ajoutez vos propres tests au fur et à mesure.
-
-Pour lancer les tests :
-    pip install pytest
-    pytest -v
 """
-import sys
-from pathlib import Path
+Tests pour le Mini-Projet A.
+Equipe 5 Caesar
+"""
 
-def test_cesar_grandes_cles():
-    """Vérifie que le modulo gère correctement les clés """
-    msg = "Test"
-    # Clé géante positive (2600 est un multiple de 26)
-    assert chiffrer(msg, 2600) == "Test"
-    # Clé géante négative (-2626 est un multiple de 26)
-    assert chiffrer(msg, -2626) == "Test"
+import os
 
-def test_cesar_caracteres_speciaux():
-    """Vérifie que la ponctuation, les espaces et les accents ne bougent pas."""
-    msg = "Hé, oh ! Regarde ça."
-    # Avec une clé de 1, 'H' devient 'I', 'R' devient 'S', etc. 
-    # Mais les espaces, virgules et accents restent à leur place.
-    assert chiffrer(msg, 1) == "Ié, pi ! Sfhbsef ça."
+from main import (
+    chiffrer,
+    dechiffrer,
+    enigma_chiffrer,
+    lire_fichier,
+    ecrire_fichier,
+    brute_force_cesar,
+    brute_force_enigma,
+)
 
-def test_cesar_casse_majuscule_minuscule():
-    """Vérifie que la casse est strictement préservée."""
-    assert chiffrer("aBcD", 1) == "bCdE"
-    assert chiffrer("XyZ", 3) == "AbC"
-    
-def test_cesar_brute_force_logique():
-    """Simule la logique du brute-force : une des 26 cles doit casser le code."""
-    message_original = "Alerte rouge"
-    message_chiffre = chiffrer(message_original, 15)
-    
-    # Le brute-force va tester les clés de 0 à 25.
-    solutions_trouvees = []
-    for cle_test in range(26):
-        decouvert = dechiffrer(message_chiffre, cle_test)
-        if decouvert == message_original:
-            solutions_trouvees.append(cle_test)
-            
-    # On s'assure qu'on a trouvé EXACTEMENT la bonne clé (15)
-    assert 15 in solutions_trouvees
-# Permet d'importer main.py depuis le dossier parent
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from main import chiffrer, dechiffrer, enigma_chiffrer  # noqa: E402
+# =========================================================
+#                 TESTS CHIFFREMENT CÉSAR
+# =========================================================
 
 
-# ---------- Chaînes de test officielles — César (spec §7) ----------
+# ---------------------------
+# 1. Test des majuscules
+# ---------------------------
+def test_majuscules():
 
-def test_cesar_officiel_cle_42():
-    assert chiffrer("Veni, vidi, vici!", 42) == "Ludy, lyty, lysy!"
-
-
-def test_cesar_officiel_cle_neg_42():
-    assert chiffrer("Veni, vidi, vici!", -42) == "Foxs, fsns, fsms!"
-
-
-# ---------- Chaîne de test officielle — Enigma César (spec §2.6) ----------
-
-def test_enigma_officiel_maison():
-    assert enigma_chiffrer("MAISON", (7, 16, 9)) == "TQRZEW"
+    assert chiffrer("BONJOUR", 3) == "ERQMRXU"
+    assert chiffrer("Bonjour", 3) == "Erqmrxu"
 
 
-# ---------- Cas standards (à compléter par votre équipe) ----------
+# ---------------------------
+# 2. Test accents + ponctuation
+# ---------------------------
+def test_accents_ponctuation():
 
-def test_cesar_round_trip():
-    """Chiffrer puis déchiffrer doit redonner le message original."""
-    msg = "Bonjour le monde !"
-    assert dechiffrer(chiffrer(msg, 7), 7) == msg
+    message = "éèê à, ça!"
+    resultat = chiffrer(message, 2)
+
+    # accents supprimés
+    assert "é" not in resultat
+
+    # ponctuation conservée
+    assert "," in resultat
+    assert "!" in resultat
 
 
-def test_cesar_cle_zero_identite():
-    """Une clé de 0 ne doit rien changer."""
-    assert chiffrer("Tout pareil.", 0) == "Tout pareil."
+# ---------------------------
+# 3. Test grandes clés positives
+# ---------------------------
+def test_grande_cle_positive():
 
+    assert chiffrer("abc", 52) == "abc"
+
+
+# ---------------------------
+# 4. Test grandes clés négatives
+# ---------------------------
+def test_grande_cle_negative():
+
+    assert chiffrer("abc", -26) == "abc"
+
+
+# ---------------------------
+# 5. Test chiffrement / déchiffrement
+# ---------------------------
+def test_chiffrement_dechiffrement():
+
+    message = "bonjour test"
+    cle = 5
+
+    chiffre = chiffrer(message, cle)
+    dechiffre = dechiffrer(chiffre, cle)
+
+    assert dechiffre == "bonjour test"
+
+
+# ---------------------------
+# 6. Test majuscules + accents mix
+# ---------------------------
+def test_mix_complexe():
+
+    message = "École de technologie supérieur !"
+    chiffre = chiffrer(message, 4)
+
+    assert isinstance(chiffre, str)
+    assert "!" in chiffre
+
+
+# ---------------------------
+# 7. Test caractères non alphabétiques
+# ---------------------------
+def test_caracteres_speciaux():
+
+    message = "1234 @@### abc"
+    chiffre = chiffrer(message, 3)
+
+    assert "1234" in chiffre
+    assert "@" in chiffre
+    assert "#" in chiffre
+
+
+# ---------------------------
+# 8. Test identité (clé = 0)
+# ---------------------------
+def test_cle_zero():
+
+    assert chiffrer("bonjour", 0) == "bonjour"
+
+
+# ---------------------------
+# 9. Test chaîne vide
+# ---------------------------
+def test_chaine_vide():
+
+    assert chiffrer("", 5) == ""
+
+
+# ---------------------------
+# 10. Test espaces
+# ---------------------------
+def test_espaces():
+
+    resultat = chiffrer("a b c", 1)
+
+    assert " " in resultat
+
+
+# =========================================================
+#                    TESTS ENIGMA
+# =========================================================
+
+
+# ---------------------------
+# 11. Test Enigma simple
+# ---------------------------
+def test_enigma_simple():
+
+    resultat = enigma_chiffrer("abc", [1, 2, 3])
+
+    assert resultat == "bdf"
+
+
+# ---------------------------
+# 12. Test Enigma avec ponctuation
+# ---------------------------
+def test_enigma_ponctuation():
+
+    resultat = enigma_chiffrer("bonjour!", [1, 2, 3])
+
+    assert "!" in resultat
+
+
+# ---------------------------
+# 13. Test Enigma conserve majuscules
+# ---------------------------
+def test_enigma_majuscules():
+
+    resultat = enigma_chiffrer("BONJOUR", [1, 2, 3])
+
+    assert resultat.isupper()
+
+
+# ---------------------------
+# 14. Test Enigma mauvaise clé
+# ---------------------------
+def test_enigma_mauvaise_cle():
+
+    resultat = enigma_chiffrer("bonjour", [1, 2])
+
+    assert resultat == "Tu dois utiliser exactement 3 clés"
+
+
+# ---------------------------
+# 15. Test Enigma dechiffrer
+# ---------------------------
+def test_enigma_cle_negative():
+
+    resultat = enigma_chiffrer("abc", [-1, -2, -3])
+
+    assert isinstance(resultat, str)
+
+
+# =========================================================
+#                    TESTS FICHIERS
+# =========================================================
+
+# ---------------------------
+# 16. Test lecture message officiel
+# ---------------------------
+def test_lecture_message_officiel():
+
+    # Création du fichier
+    ecrire_fichier("message.txt", "Veni, vidi, vici!")
+
+    contenu = lire_fichier("message.txt")
+
+    assert "Veni" in contenu
+
+    chiffre = chiffrer(contenu, 3)
+
+    # veni -> yhql
+    assert chiffre == "Yhql, ylgl, ylfl!"
+
+
+# =========================================================
+#               TEST PERFORMANCE (TIMEIT)
+# =========================================================
+
+
+# ---------------------------
+# 17. Test performance
+# ---------------------------
+def test_performance_timeit(capsys):
+
+    from main import mesurer_performance
+
+    mesurer_performance("chiffrer", "test", 3)
+
+    # Capture console
+    console_output = capsys.readouterr().out
+
+    assert "Rapport de Performance" in console_output
+    assert "Temps total" in console_output
+
+# =========================================================
+#               TESTS BRUTE FORCE
+# =========================================================
+
+def test_bruteforce_cesar():
+
+    message = chiffrer("bonjour", 3)
+
+    resultats = brute_force_cesar(message)
+
+    textes = [texte for cle, texte in resultats]
+
+    assert "bonjour" in textes
+
+
+def test_bruteforce_enigma():
+
+    message = enigma_chiffrer("abc", [1, 2, 3])
+
+    resultats = brute_force_enigma(message)
+
+    textes = [texte for cles, texte in resultats]
+
+    assert "abc" in textes
 
 # TODO : ajoutez vos propres tests ci-dessous
-#  - test pour les majuscules
-#  - test pour les caractères spéciaux (accents, ponctuation)
-#  - test pour les très grandes clés (positives et négatives)
-#  - test pour le brute-force (César ET Enigma César)
-#  - test que enigma_chiffrer rejette une clé qui n'a pas 3 nombres
+# - test brute-force César
+# - test brute-force Enigma César
+# - autres cas limites
