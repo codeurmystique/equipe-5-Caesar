@@ -1,12 +1,21 @@
-"""Tests pour le Mini-Projet A.
-equipe 5 caesar
-
+"""
+Tests pour le Mini-Projet A.
+Equipe 5 Caesar
 """
 
-# ---------- Chaînes de test officielles — César (spec §7) ----------
+import os
 
-from main import chiffrer, dechiffrer, enigma_chiffrer, lire_fichier, ecrire_fichier
+from main import (
+    chiffrer,
+    dechiffrer,
+    enigma_chiffrer,
+    lire_fichier,
+    ecrire_fichier,
+)
 
+# =========================================================
+#                 TESTS CHIFFREMENT CÉSAR
+# =========================================================
 
 
 # ---------------------------
@@ -25,8 +34,10 @@ def test_accents_ponctuation():
     message = "éèê à, ça!"
     resultat = chiffrer(message, 2)
 
-    # doit supprimer les accents mais garder ponctuation
-    assert "g" in resultat
+    # accents supprimés
+    assert "é" not in resultat
+
+    # ponctuation conservée
     assert "," in resultat
     assert "!" in resultat
 
@@ -83,6 +94,7 @@ def test_caracteres_speciaux():
 
     assert "1234" in chiffre
     assert "@" in chiffre
+    assert "#" in chiffre
 
 
 # ---------------------------
@@ -93,11 +105,31 @@ def test_cle_zero():
     assert chiffrer("bonjour", 0) == "bonjour"
 
 
-# ---------- Chaîne de test officielle — Enigma César ----------
+# ---------------------------
+# 9. Test chaîne vide
+# ---------------------------
+def test_chaine_vide():
+
+    assert chiffrer("", 5) == ""
 
 
 # ---------------------------
-# 9. Test Enigma César simple
+# 10. Test espaces
+# ---------------------------
+def test_espaces():
+
+    resultat = chiffrer("a b c", 1)
+
+    assert " " in resultat
+
+
+# =========================================================
+#                    TESTS ENIGMA
+# =========================================================
+
+
+# ---------------------------
+# 11. Test Enigma simple
 # ---------------------------
 def test_enigma_simple():
 
@@ -107,7 +139,7 @@ def test_enigma_simple():
 
 
 # ---------------------------
-# 10. Test Enigma avec ponctuation
+# 12. Test Enigma avec ponctuation
 # ---------------------------
 def test_enigma_ponctuation():
 
@@ -117,7 +149,7 @@ def test_enigma_ponctuation():
 
 
 # ---------------------------
-# 11. Test Enigma conserve majuscules
+# 13. Test Enigma conserve majuscules
 # ---------------------------
 def test_enigma_majuscules():
 
@@ -127,7 +159,7 @@ def test_enigma_majuscules():
 
 
 # ---------------------------
-# 12. Test Enigma mauvaise clé
+# 14. Test Enigma mauvaise clé
 # ---------------------------
 def test_enigma_mauvaise_cle():
 
@@ -137,7 +169,7 @@ def test_enigma_mauvaise_cle():
 
 
 # ---------------------------
-# 13. Test Enigma clé négative
+# 15. Test Enigma clé négative
 # ---------------------------
 def test_enigma_cle_negative():
 
@@ -146,32 +178,16 @@ def test_enigma_cle_negative():
     assert isinstance(resultat, str)
 
 
-# ---------------------------
-# 14. Test chaîne vide
-# ---------------------------
-def test_chaine_vide():
-
-    assert chiffrer("", 5) == ""
+# =========================================================
+#                    TESTS FICHIERS
+# =========================================================
 
 
 # ---------------------------
-# 15. Test espaces
-# ---------------------------
-def test_espaces():
-    resultat = chiffrer("a b c", 1)
-    assert " " in resultat
-
-
-# ---------------------------
-# 16. Test lire ecrire
-# ---------------------------
-import os
-
-
-# ---------------------------
-# 17. Test lire ecrire
+# 16. Test lire / écrire fichier
 # ---------------------------
 def test_lire_ecrire_fichier():
+
     nom_test = "test_temporaire.txt"
     contenu_attendu = "bonjour"
 
@@ -179,48 +195,53 @@ def test_lire_ecrire_fichier():
     ecrire_fichier(nom_test, contenu_attendu)
     contenu_recu = lire_fichier(nom_test)
 
-    # Nettoyage du fichier
+    # Nettoyage
     if os.path.exists(nom_test):
         os.remove(nom_test)
 
     assert contenu_recu == contenu_attendu
 
-    # ---------------------------
-    # 18. Test lecture du message
-    # ---------------------------
-    def test_lecture_message_officiel():
-        # On crée le fichier requis pour le test
-        ecrire_fichier("message.txt", "Veni, vidi, vici!")
 
-        contenu = lire_fichier("message.txt")
-        assert "Veni" in contenu
-        chiffre = chiffrer(contenu, 3)
-        assert "yhqk" in chiffre  # 'Veni' -> 'veni' décalé de 3 devient 'yhqk'
+# ---------------------------
+# 17. Test lecture message officiel
+# ---------------------------
+def test_lecture_message_officiel():
 
-        # ---------------------------
-        # 19. Test de la fonctionnalité Performance (timeit)
-        # ---------------------------
-        def test_performance_timeit(capsys):
-            """Vérifie que l'option --timeit s'exécute correctement et affiche le rapport."""
-            from main import main
+    # Création du fichier
+    ecrire_fichier("message.txt", "Veni, vidi, vici!")
 
-            # On simule le passage d'arguments en ligne de commande à la fonction main
-            arguments_simulation = ["chiffrer", "test de performance", "-c", "5", "--timeit"]
+    contenu = lire_fichier("message.txt")
 
-            # Exécution du main avec les arguments simulés
-            main(arguments_simulation)
+    assert "Veni" in contenu
 
-            # On capture ce qui a été affiché dans la console
-            console_output = capsys.readouterr().out
+    chiffre = chiffrer(contenu, 3)
 
-            # Vérifications : le rapport doit contenir ces mots-clés
-            assert "Rapport de Performance" in console_output
-            assert "Action mesurée" in console_output
-            assert "Temps total" in console_output
+    # veni -> yhql
+    assert "yhql" in chiffre
+
+
+# =========================================================
+#               TEST PERFORMANCE (TIMEIT)
+# =========================================================
+
+
+# ---------------------------
+# 18. Test performance
+# ---------------------------
+def test_performance_timeit(capsys):
+
+    from main import mesurer_performance
+
+    mesurer_performance("chiffrer", "test", 3)
+
+    # Capture console
+    console_output = capsys.readouterr().out
+
+    assert "Rapport de Performance" in console_output
+    assert "Temps total" in console_output
 
 
 # TODO : ajoutez vos propres tests ci-dessous
-#  - test brute-force César
-#  - test brute-force Enigma César
-#  - autres cas limites
-
+# - test brute-force César
+# - test brute-force Enigma César
+# - autres cas limites
