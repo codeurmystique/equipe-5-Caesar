@@ -212,6 +212,11 @@ Ce projet nous a permis de développer plusieurs compétences importantes, essen
 - Manipulation de GitHub ;
 - débogage et tests unitaires.
 
+# Auteurs 
+
+**Nada Chaouachi** 
+**Asma Brik**
+**Amajuoyi Ogechi**
 
 
 # Références
