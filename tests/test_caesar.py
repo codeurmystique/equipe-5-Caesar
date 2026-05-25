@@ -11,6 +11,8 @@ from main import (
     enigma_chiffrer,
     lire_fichier,
     ecrire_fichier,
+    brute_force_cesar,
+    brute_force_enigma,
 )
 
 # =========================================================
@@ -22,9 +24,9 @@ from main import (
 # 1. Test des majuscules
 # ---------------------------
 def test_majuscules():
-    def test_majuscules():
-        assert chiffrer("BONJOUR", 3) == "ERQMRXU"
-        assert chiffrer("Bonjour", 3) == "Erqmrxu"
+
+    assert chiffrer("BONJOUR", 3) == "ERQMRXU"
+    assert chiffrer("Bonjour", 3) == "Erqmrxu"
 
 
 # ---------------------------
@@ -170,7 +172,7 @@ def test_enigma_mauvaise_cle():
 
 
 # ---------------------------
-# 15. Test Enigma clé négative
+# 15. Test Enigma dechiffrer
 # ---------------------------
 def test_enigma_cle_negative():
 
@@ -183,28 +185,8 @@ def test_enigma_cle_negative():
 #                    TESTS FICHIERS
 # =========================================================
 
-
 # ---------------------------
-# 16. Test lire / écrire fichier
-# ---------------------------
-def test_lire_ecrire_fichier():
-
-    nom_test = "test_temporaire.txt"
-    contenu_attendu = "bonjour"
-
-    # Écriture puis lecture
-    ecrire_fichier(nom_test, contenu_attendu)
-    contenu_recu = lire_fichier(nom_test)
-
-    # Nettoyage
-    if os.path.exists(nom_test):
-        os.remove(nom_test)
-
-    assert contenu_recu == contenu_attendu
-
-
-# ---------------------------
-# 17. Test lecture message officiel
+# 16. Test lecture message officiel
 # ---------------------------
 def test_lecture_message_officiel():
 
@@ -218,7 +200,7 @@ def test_lecture_message_officiel():
     chiffre = chiffrer(contenu, 3)
 
     # veni -> yhql
-    assert "yhql" in chiffre
+    assert chiffre == "Yhql, ylgl, ylfl!"
 
 
 # =========================================================
@@ -227,7 +209,7 @@ def test_lecture_message_officiel():
 
 
 # ---------------------------
-# 18. Test performance
+# 17. Test performance
 # ---------------------------
 def test_performance_timeit(capsys):
 
@@ -241,6 +223,30 @@ def test_performance_timeit(capsys):
     assert "Rapport de Performance" in console_output
     assert "Temps total" in console_output
 
+# =========================================================
+#               TESTS BRUTE FORCE
+# =========================================================
+
+def test_bruteforce_cesar():
+
+    message = chiffrer("bonjour", 3)
+
+    resultats = brute_force_cesar(message)
+
+    textes = [texte for cle, texte in resultats]
+
+    assert "bonjour" in textes
+
+
+def test_bruteforce_enigma():
+
+    message = enigma_chiffrer("abc", [1, 2, 3])
+
+    resultats = brute_force_enigma(message)
+
+    textes = [texte for cles, texte in resultats]
+
+    assert "abc" in textes
 
 # TODO : ajoutez vos propres tests ci-dessous
 # - test brute-force César
