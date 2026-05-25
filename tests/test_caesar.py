@@ -10,7 +10,7 @@ Pour lancer les tests :
 
 # ---------- Chaînes de test officielles — César (spec §7) ----------
 
-from main import chiffrer, dechiffrer, enigma_chiffrer
+from main import chiffrer, dechiffrer, enigma_chiffrer, lire_fichier, ecrire_fichier
 
 
 # ---------------------------
@@ -166,6 +166,17 @@ def test_espaces():
     resultat = chiffrer("a b c", 1)
 
     assert " " in resultat
+
+    # ---------------------------
+    # 16. Test lire ecrire
+    # ---------------------------
+
+    def test_lire_ecrire_fichier():
+        ecrire_fichier("test.txt", "bonjour")
+
+        contenu = lire_fichier("test.txt")
+
+        assert contenu == "bonjour"
 
 
 # TODO : ajoutez vos propres tests ci-dessous
