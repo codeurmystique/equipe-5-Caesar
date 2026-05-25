@@ -1,6 +1,6 @@
 """
 MGA802 — Mini-Projet A : Chiffrement de César
-Bienvennue au script d'automatisation du chiffrement/dechiffrement par décalage
+Bienvenue au script d'automatisation du chiffrement/dechiffrement par décalage
 """
 
 import argparse
@@ -59,157 +59,71 @@ def dechiffrer(mot: str, cles: int):
 
     return chiffrer(mot, -cles)
 
-
-# Fonction Enigma César
+# Fonction de chiffrement Enigma César utilisant 3 clés différentes
 def enigma_chiffrer(message: str, cles):
 
     if len(cles) != 3:
         return "Tu dois utiliser exactement 3 clés"
 
     message_normalise = enlever_accents(message)
-
-    # Compteur indice
+    resultat = []
     index_cle = 0
 
-    resultat = []
-
-    # parcourir chaque lettre
     for lettre in message_normalise:
-
         lettre_min = lettre.lower()
 
-        # Vérifier si une lettre alphabétique
         if lettre_min in ALPHABET:
-
-            # choisir la clé
             cle_actuelle = cles[index_cle % 3]
 
-            # position de la lettre
             position = ALPHABET.find(lettre_min)
-
-            # Attribuer la nouvelle position
             nouvelle_position = (position + cle_actuelle) % 26
-
-            # Recuperer la nouvelle lettre
             nouvelle_lettre = ALPHABET[nouvelle_position]
 
-            # conserver les majuscules
             if lettre.isupper():
                 nouvelle_lettre = nouvelle_lettre.upper()
 
             resultat.append(nouvelle_lettre)
-
-            # Passer à une autre clé
             index_cle += 1
 
         else:
             resultat.append(lettre)
 
-    return ''.join(resultat)
+    return "".join(resultat)
 
 
+# Fonction de déchiffrement Enigma César utilisant les clés inversées
 def enigma_dechiffrer(message: str, cles):
 
     cles_inversees = (-cles[0], -cles[1], -cles[2])
-
     return enigma_chiffrer(message, cles_inversees)
 
 
-# Lire un fichier texte
-def lire_fichier(nom_fichier: str):
-
-    with open(nom_fichier, "r", encoding="utf-8") as fichier:
-        return fichier.read()
-
-
-def ecrire_fichier(nom_fichier: str, contenu: str):
-
-    with open(nom_fichier, "w", encoding="utf-8") as fichier:
-        fichier.write(contenu)
-
-
-# Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
+# Fonction qui essaie toutes les clés possibles du chiffrement César
 def brute_force_cesar(message: str):
 
-    resultat = []
+    resultats = []
 
-    # Tester toutes les clés possibles de 0 à 25
     for cle in range(26):
-
         texte = dechiffrer(message, cle)
+        resultats.append((cle, texte))
 
-        resultat.append((cle, texte))
-
-    return resultat
+    return resultats
 
 
-# Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
+# Fonction qui essaie toutes les combinaisons possibles des 3 clés Enigma César
 def brute_force_enigma(message: str):
 
-    result = []
+    resultats = []
 
-    message_normalise = enlever_accents(message)
-
-    # Tester toutes les valeurs possibles pour la première clé
     for cle1 in range(26):
-
-        # Tester toutes les valeurs possibles pour la deuxième clé
         for cle2 in range(26):
-
-            # Tester toutes les valeurs possibles pour la troisième clé
             for cle3 in range(26):
-
-                # Créer un tuple contenant les 3 clés
                 cles = (cle1, cle2, cle3)
+                texte = enigma_dechiffrer(message, cles)
+                resultats.append((cles, texte))
 
-                texte = enigma_chiffrer(
-                    message_normalise,
-                    (-cle1, -cle2, -cle3)
-                )
+    return resultats
 
-                result.append((cles, texte))
-
-    return result
-
-# Fonction pour déchiffre un message Enigma César en utilisant les clés inversées.
-
-def enigma_dechiffrer(message: str, cles):
-    cles_inversees = (-cles[0], -cles[1], -cles[2])
-    return enigma_chiffrer(message, cles_inversees)
-
-# Fonction qui essaye toutes les clés possibles du chiffrement César pour trouver le message original
-
-def brute_force_cesar(message: str):
-	resultat = []
-# Tester toutes les clés possibles de 0 à 25
-	for cle in range(26):
-		texte = dechiffrer(message, cle)
-		resultat.append((cle, texte))
-	return resultat
-
-# Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
-
-def brute_force_enigma(message: str):
-	resultats = []
-
-# Tester toutes les valeurs possibles pour la première clé
-	for cle1 in range(26):
-
-# Tester toutes les valeurs possibles pour la deuxième clé
-		for cle2 in range(26):
-
-# Tester toutes les valeurs possibles pour la troisième clé
-			for cle3 in range(26):
-
-# Créer un tuple contenant les 3 clés
-				cles = (cle1, cle2, cle3)
-
-# Déchiffrer le message
-# On utilise les clés négatives pour inverser le chiffrement
-texte = enigma_chiffrer(message,(-cle1, -cle2, -cle3))
-resultats.append((cles, texte))
-
-	return resultats
 
 
 def _parse_cle(texte: str):
