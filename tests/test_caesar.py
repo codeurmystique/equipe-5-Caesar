@@ -1,11 +1,6 @@
 """Tests pour le Mini-Projet A.
+equipe 5 caesar
 
-Ce fichier contient les chaînes de test officielles + quelques cas
-limites. Ajoutez vos propres tests au fur et à mesure.
-
-Pour lancer les tests :
-    pip install pytest
-    pytest -v
 """
 
 # ---------- Chaînes de test officielles — César (spec §7) ----------
