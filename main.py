@@ -115,7 +115,7 @@ def enigma_chiffrer(message: str, cles):
 
     return ''.join(resultat)
 
-#fonction enigma dechiffrer 
+#fonction enigma dechiffrer
 def enigma_dechiffrer(message: str, cles):
 
     cles_inversees = (-cles[0], -cles[1], -cles[2])
@@ -327,7 +327,7 @@ def main(argv=None):
 
 # TODO : Une fois les fonctions de base implémentées, vous pourrez :
 # - Ajouter des options pour lire/écrire depuis des fichiers
-# - Implémenter le mode brute-force
+# - Implémenter le mode brute-for
 # - Ajouter d'autres fonctionnalités
 
 
