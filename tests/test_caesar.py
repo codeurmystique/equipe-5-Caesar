@@ -8,6 +8,7 @@ equipe 5 caesar
 from main import chiffrer, dechiffrer, enigma_chiffrer, lire_fichier, ecrire_fichier
 
 
+
 # ---------------------------
 # 1. Test des majuscules
 # ---------------------------
@@ -169,7 +170,7 @@ import os
 
 
 # ---------------------------
-# 16. Test lire ecrire
+# 17. Test lire ecrire
 # ---------------------------
 def test_lire_ecrire_fichier():
     nom_test = "test_temporaire.txt"
@@ -186,7 +187,7 @@ def test_lire_ecrire_fichier():
     assert contenu_recu == contenu_attendu
 
     # ---------------------------
-    # 17. Test lecture du message
+    # 18. Test lecture du message
     # ---------------------------
     def test_lecture_message_officiel():
         # On crée le fichier requis pour le test
@@ -196,6 +197,28 @@ def test_lire_ecrire_fichier():
         assert "Veni" in contenu
         chiffre = chiffrer(contenu, 3)
         assert "yhqk" in chiffre  # 'Veni' -> 'veni' décalé de 3 devient 'yhqk'
+
+        # ---------------------------
+        # 19. Test de la fonctionnalité Performance (timeit)
+        # ---------------------------
+        def test_performance_timeit(capsys):
+            """Vérifie que l'option --timeit s'exécute correctement et affiche le rapport."""
+            from main import main
+
+            # On simule le passage d'arguments en ligne de commande à la fonction main
+            arguments_simulation = ["chiffrer", "test de performance", "-c", "5", "--timeit"]
+
+            # Exécution du main avec les arguments simulés
+            main(arguments_simulation)
+
+            # On capture ce qui a été affiché dans la console
+            console_output = capsys.readouterr().out
+
+            # Vérifications : le rapport doit contenir ces mots-clés
+            assert "Rapport de Performance" in console_output
+            assert "Action mesurée" in console_output
+            assert "Temps total" in console_output
+
 
 # TODO : ajoutez vos propres tests ci-dessous
 #  - test brute-force César
