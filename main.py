@@ -5,11 +5,18 @@ Bienvenue au script d'automatisation du chiffrement/dechiffrement par décalage
 
 import argparse
 import unicodedata
+
+# On importe le module string parce qu'il contient des chaînes utiles,
+# comme l'alphabet en minuscules et l'alphabet en majuscules.
 import string
 
-# Variable global pour simplifier l'acces dans les fonctions
-ALPHABET = string.ascii_lowercase
+# Constante contenant toutes les lettres minuscules de l'alphabet anglais.
+# On l'utilise pour trouver la position d'une lettre minuscule.
+ALPHABET_MIN = string.ascii_lowercase  # "abcdefghijklmnopqrstuvwxyz"
 
+# Constante contenant toutes les lettres majuscules de l'alphabet anglais.
+# On l'utilise pour préserver les majuscules pendant le chiffrement.
+ALPHABET_MAJ = string.ascii_uppercase  # "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 # Séparer les lettres de leurs accents
 def enlever_accents(mot: str):
@@ -25,106 +32,192 @@ def enlever_accents(mot: str):
     return ''.join(resultat)
 
 
-# Introduire une fonction chiffrer
-def chiffrer(mot: str, cles: int):
+def chiffrer(message: str, cle: int) -> str:
+    """
+    Chiffre un message avec le chiffrement de César.
 
-    # Chiffrer le mot en appliquant le decalage de césar
-    mot = enlever_accents(mot.lower())
+    Paramètres :
+        message : le texte à chiffrer
+        cle : le décalage à appliquer aux lettres
 
-    resultat = []
+    Retour :
+        Le message chiffré
+    """
 
-    for lettre in mot:
+    # On crée une chaîne vide qui recevra progressivement le message chiffré.
+    resultat = ""
+    message = enlever_accents(message)
 
-        if lettre in ALPHABET:
+    # On parcourt chaque caractère du message original, un par un.
+    for caractere in message:
 
-            position = ALPHABET.find(lettre)
+        # Si le caractère est une lettre minuscule, on applique le décalage
+        # dans l'alphabet minuscule.
+        if caractere in ALPHABET_MIN:
 
-            # Introduire une nouvelle position et appliquer le decalage modulo 26
-            nouvelle_position = (position + cles) % 26
+            # On cherche la position de la lettre dans l'alphabet.
+            # Exemple : "a" est à la position 0, "b" à 1, "c" à 2.
+            position = ALPHABET_MIN.find(caractere)
 
-            # Introduire une nouvelle lettre
-            nouvelle_lettre = ALPHABET[nouvelle_position]
+            # On calcule la nouvelle position après le décalage.
+            # Le modulo 26 permet de revenir au début de l'alphabet
+            # si on dépasse la lettre "z".
+            nouvelle_position = (position + cle) % 26
 
-            resultat.append(nouvelle_lettre)
+            # On récupère la nouvelle lettre à cette position
+            # et on l'ajoute au résultat.
+            resultat += ALPHABET_MIN[nouvelle_position]
 
+        # Si le caractère est une lettre majuscule, on applique la même logique
+        # mais avec l'alphabet majuscule pour préserver la casse.
+        elif caractere in ALPHABET_MAJ:
+
+            # On cherche la position de la lettre majuscule.
+            position = ALPHABET_MAJ.find(caractere)
+
+            # On calcule la nouvelle position avec le même principe.
+            nouvelle_position = (position + cle) % 26
+
+            # On ajoute la nouvelle lettre majuscule au résultat.
+            resultat += ALPHABET_MAJ[nouvelle_position]
+
+        # Si le caractère n'est pas une lettre de l'alphabet,
+        # par exemple une virgule, un espace, un accent ou un point,
+        # on le garde tel quel.
         else:
-            # sinon resultat conserve la lettre
-            resultat.append(lettre)
+            resultat += caractere
 
-    return ''.join(resultat)
+    # Quand tous les caractères ont été traités,
+    # on retourne le message chiffré complet.
+    return resultat
 
 
-# Introduire une fonction de dechiffrement
-def dechiffrer(mot: str, cles: int):
+def dechiffrer(message: str, cle: int) -> str:
+    """
+    Déchiffre un message chiffré avec le chiffrement de César.
 
-    return chiffrer(mot, -cles)
+    Le déchiffrement applique le décalage inverse.
+    Si le chiffrement utilise +cle, le déchiffrement utilise -cle.
+    """
 
-# Fonction de chiffrement Enigma César utilisant 3 clés différentes
+    return chiffrer(message, -cle)
+
+def brute_force_cesar(message: str) -> dict:
+    """
+    Teste toutes les clés possibles du chiffrement de César.
+
+    Paramètre :
+        message : le message chiffré
+
+    Retour :
+        Un dictionnaire contenant chaque clé testée et le message déchiffré correspondant.
+    """
+
+    resultats = {}
+
+    for cle in range(26):
+        message_dechiffre = dechiffrer(message, cle)
+        resultats[cle] = message_dechiffre
+
+    return resultats
+
+
+# Fonction Enigma César
 def enigma_chiffrer(message: str, cles):
 
     if len(cles) != 3:
         return "Tu dois utiliser exactement 3 clés"
 
     message_normalise = enlever_accents(message)
-    resultat = []
+
+    # Compteur indice
     index_cle = 0
 
+    resultat = []
+
+    # parcourir chaque lettre
     for lettre in message_normalise:
+
         lettre_min = lettre.lower()
 
-        if lettre_min in ALPHABET:
+        # Vérifier si une lettre alphabétique
+        if lettre_min in ALPHABET_MIN:
+
+            # choisir la clé
             cle_actuelle = cles[index_cle % 3]
 
-            position = ALPHABET.find(lettre_min)
-            nouvelle_position = (position + cle_actuelle) % 26
-            nouvelle_lettre = ALPHABET[nouvelle_position]
+            # position de la lettre
+            position = ALPHABET_MIN.find(lettre_min)
 
+            # Attribuer la nouvelle position
+            nouvelle_position = (position + cle_actuelle) % 26
+
+            # Recuperer la nouvelle lettre
+            nouvelle_lettre = ALPHABET_MIN[nouvelle_position]
+
+            # conserver les majuscules
             if lettre.isupper():
                 nouvelle_lettre = nouvelle_lettre.upper()
 
             resultat.append(nouvelle_lettre)
+
+            # Passer à une autre clé
             index_cle += 1
 
         else:
             resultat.append(lettre)
 
-    return "".join(resultat)
+    return ''.join(resultat)
 
 
-# Fonction de déchiffrement Enigma César utilisant les clés inversées
+# Fonction pour déchiffre un message Enigma César en utilisant les clés inversées.
+
 def enigma_dechiffrer(message: str, cles):
-
     cles_inversees = (-cles[0], -cles[1], -cles[2])
     return enigma_chiffrer(message, cles_inversees)
 
 
-# Fonction qui essaie toutes les clés possibles du chiffrement César
-def brute_force_cesar(message: str):
 
-    resultats = []
-
-    for cle in range(26):
-        texte = dechiffrer(message, cle)
-        resultats.append((cle, texte))
-
-    return resultats
-
-
-# Fonction qui essaie toutes les combinaisons possibles des 3 clés Enigma César
+# Fonction qui essaye toutes les clés possibles du chiffrement Enigma pour trouver le message original
 def brute_force_enigma(message: str):
-
     resultats = []
 
+    # Tester toutes les valeurs possibles pour la première clé
     for cle1 in range(26):
+
+        # Tester toutes les valeurs possibles pour la deuxième clé
         for cle2 in range(26):
+
+            # Tester toutes les valeurs possibles pour la troisième clé
             for cle3 in range(26):
+
+                # Créer un tuple contenant les 3 clés
                 cles = (cle1, cle2, cle3)
-                texte = enigma_dechiffrer(message, cles)
+
+                # Déchiffrer le message
+                # On utilise les clés négatives pour inverser le chiffrement
+                texte = enigma_chiffrer(
+                    message,
+                    (-cle1, -cle2, -cle3)
+                )
+
                 resultats.append((cles, texte))
 
     return resultats
 
 
+# Lire un fichier texte
+def lire_fichier(nom_fichier: str):
+
+    with open(nom_fichier, "r", encoding="utf-8") as fichier:
+        return fichier.read()
+
+
+def ecrire_fichier(nom_fichier: str, contenu: str):
+
+    with open(nom_fichier, "w", encoding="utf-8") as fichier:
+        fichier.write(contenu)
+        
 
 def _parse_cle(texte: str):
     """Convertit l'argument --cle en clé utilisable.
@@ -157,90 +250,89 @@ def _parse_cle(texte: str):
 
 
 def main(argv=None):
-    """Point d'entrée principal du programme en ligne de commande."""
+	"""Point d'entrée principal du programme en ligne de commande.
 
-    # === ÉTAPE 1 : Créer et configurer le parseur d'arguments ===
-    parser = argparse.ArgumentParser(
-        description="Mini-Projet A : chiffrement de César / Enigma César."
-    )
+	Cette fonction :
+	1. Parse les arguments saisis par l'utilisateur (action, message, clé)
+	2. Convertit la clé en type approprié (int ou tuple)
+	3. Appelle la fonction correspondante (chiffrer, dechiffrer ou enigma_chiffrer)
+	4. Affiche le résultat
 
-    # === ÉTAPE 2 : Définir les arguments attendus ===
+	Paramètre :
+		argv (list ou None) : si None, utilise sys.argv (arguments de la console).
+		                      si list, utilise les arguments fournis (utile pour les tests).
 
-    parser.add_argument(
-        "action",
-        choices=[
-            "chiffrer",
-            "dechiffrer",
-            "enigma",
-            "bruteforce_cesar",
-            "bruteforce_enigma"
-        ],
-        help="Opération à effectuer."
-    )
+	Exemples d'utilisation en terminal :
+		python main.py chiffrer "Veni, vidi, vici!" --cle 42
+		python main.py dechiffrer "Ludy, lyty, lysy!" --cle 42
+		python main.py enigma "MAISON" --cle 7-16-9
+	"""
+	# === ÉTAPE 1 : Créer et configurer le parseur d'arguments ===
+	# argparse est un module qui aide à gérer les arguments en ligne de commande.
+	# ArgumentParser crée un analyseur personnalisé pour notre programme.
+	parser = argparse.ArgumentParser(
+		description="Mini-Projet A : chiffrement de César / Enigma César.")
 
-    parser.add_argument(
-        "message",
-        help="Texte à traiter (mettez-le entre guillemets)."
-    )
+	# === ÉTAPE 2 : Définir les arguments attendus ===
 
-    parser.add_argument(
-        "-c",
-        "--cle",
-        required=False,
-        help="Clé : un entier (ex. '42') ou 'a-b-c' (ex. '7-16-9') pour Enigma."
-    )
+	# Argument positionnel "action" : l'opération à effectuer.
+	# - Obligatoire (pas de -- devant)
+	# - Doit être l'une des valeurs listées dans "choices"
+	parser.add_argument(
+		"action",
+		choices=["chiffrer", "dechiffrer", "bruteforce", "enigma"],
+		help="Opération à effectuer (chiffrer, dechiffrer, bruteforce ou enigma).")
 
-    # === ÉTAPE 3 : Analyser les arguments ===
-    args = parser.parse_args(argv)
+	# Argument positionnel "message" : le texte à traiter.
+	# - Obligatoire
+	# - C'est la chaîne que nous allons chiffrer ou déchiffrer
+	parser.add_argument(
+		"message",
+		help="Texte à traiter (mettez-le entre guillemets).")
 
-    # === ÉTAPE 4 : Convertir la clé ===
-    cle = None
+	# Argument optionnel "--cle" (abréviation "-c") : la clé de chiffrement.
+	# - Obligatoire via required=True
+	# - Peut être un entier (César) ou trois entiers séparés par des tirets (Enigma César)
+	parser.add_argument(
+		"-c", "--cle", required=True,
+		help="Clé : un entier (ex. '42') ou 'a-b-c' (ex. '7-16-9') pour Enigma.")
 
-    if args.cle:
-        cle = _parse_cle(args.cle)
+	# === ÉTAPE 3 : Analyser les arguments ===
+	# parse_args() transforme les arguments en un objet "Namespace" avec des attributs.
+	# Si argv=None, il lit automatiquement depuis la ligne de commande.
+	# Sinon, il utilise la liste fournie.
+	args = parser.parse_args(argv)
 
-    # === ÉTAPE 5 : Choisir et exécuter l'opération ===
+	# Maintenant, on peut accéder aux arguments via :
+	# - args.action (ex. "chiffrer")
+	# - args.message (ex. "Veni, vidi, vici!")
+	# - args.cle (ex. "42" ou "7-16-9", toujours en chaîne de caractères)
 
-    if args.action == "chiffrer":
+	# === ÉTAPE 4 : Convertir la clé (texte) en type approprié ===
+	# _parse_cle() transforme la clé en int (César) ou tuple (Enigma).
+	cle = _parse_cle(args.cle)
 
-        # Appeler la fonction chiffrer
-        resultat = chiffrer(args.message, cle)
+	# === ÉTAPE 5 : Choisir et exécuter l'opération ===
+	# Selon l'action, on appelle la fonction appropriée.
+	# (Une fois que chiffrer / dechiffrer / enigma_chiffrer seront implémentées,
+	#  ces appels retourneront le résultat du chiffrement/déchiffrement.)
 
-        print(resultat)
+	if args.action == "chiffrer":
+		# L'utilisateur veut chiffrer : on appelle chiffrer()
+		resultat = chiffrer(args.message, cle)
+	elif args.action == "dechiffrer":
+		# L'utilisateur veut déchiffrer : on appelle dechiffrer()
+		resultat = dechiffrer(args.message, cle)
+	elif args.action == "bruteforce":
+		# L'utilisateur veut utiliser la force brute César : on appelle brute_force_cesar()
+		resultat = brute_force_cesar(args.message)
+	else:  # args.action == "enigma"
+		# L'utilisateur veut utiliser Enigma César : on appelle enigma_chiffrer()
+		resultat = enigma_chiffrer(args.message, cle)
 
-    elif args.action == "dechiffrer":
-
-        # Appeler la fonction dechiffrer
-        resultat = dechiffrer(args.message, cle)
-
-        print(resultat)
-
-    elif args.action == "enigma":
-
-        # Appeler la fonction enigma
-        resultat = enigma_chiffrer(args.message, cle)
-
-        print(resultat)
-
-    elif args.action == "bruteforce_cesar":
-
-        resultat = brute_force_cesar(args.message)
-
-        for cle, texte in resultat:
-            print(f"Clé {cle} : {texte}")
-
-    elif args.action == "bruteforce_enigma":
-
-        resultat = brute_force_enigma(args.message)
-
-        for cles, texte in resultat:
-            print(f"Clés {cles} : {texte}")
-
-
-# TODO : Une fois les fonctions de base implémentées, vous pourrez :
-# - Ajouter des options pour lire/écrire depuis des fichiers
-# - Implémenter le mode brute-force
-# - Ajouter d'autres fonctionnalités
+	# === ÉTAPE 6 : Afficher le résultat ===
+	# print() affiche le résultat à l'écran pour que l'utilisateur le voie.
+	print(resultat)
 
 
 if __name__ == "__main__":
