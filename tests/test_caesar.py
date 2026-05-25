@@ -70,7 +70,7 @@ def test_chiffrement_dechiffrement():
 # ---------------------------
 def test_mix_complexe():
 
-    message = "École Polytechnique!"
+    message = "École de technologie supérieur !"
     chiffre = chiffrer(message, 4)
 
     assert isinstance(chiffre, str)
@@ -162,21 +162,17 @@ def test_chaine_vide():
 # 15. Test espaces
 # ---------------------------
 def test_espaces():
-
     resultat = chiffrer("a b c", 1)
-
     assert " " in resultat
 
-    # ---------------------------
-    # 16. Test lire ecrire
-    # ---------------------------
 
-    def test_lire_ecrire_fichier():
-        ecrire_fichier("test.txt", "bonjour")
-
-        contenu = lire_fichier("test.txt")
-
-        assert contenu == "bonjour"
+# ---------------------------
+# 16. Test lire ecrire
+# ---------------------------
+def test_lire_ecrire_fichier():
+    ecrire_fichier("test.txt", "bonjour")
+    contenu = lire_fichier("test.txt")
+    assert contenu == "bonjour"
 
 
 # TODO : ajoutez vos propres tests ci-dessous
