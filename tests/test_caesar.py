@@ -164,11 +164,37 @@ def test_espaces():
 # ---------------------------
 # 16. Test lire ecrire
 # ---------------------------
-def test_lire_ecrire_fichier():
-    ecrire_fichier("test.txt", "bonjour")
-    contenu = lire_fichier("test.txt")
-    assert contenu == "bonjour"
+import os
 
+
+# ---------------------------
+# 16. Test lire ecrire
+# ---------------------------
+def test_lire_ecrire_fichier():
+    nom_test = "test_temporaire.txt"
+    contenu_attendu = "bonjour"
+
+    # Écriture puis lecture
+    ecrire_fichier(nom_test, contenu_attendu)
+    contenu_recu = lire_fichier(nom_test)
+
+    # Nettoyage du fichier
+    if os.path.exists(nom_test):
+        os.remove(nom_test)
+
+    assert contenu_recu == contenu_attendu
+
+    # ---------------------------
+    # 17. Test lecture du message
+    # ---------------------------
+    def test_lecture_message_officiel():
+        # On crée le fichier requis pour le test
+        ecrire_fichier("message.txt", "Veni, vidi, vici!")
+
+        contenu = lire_fichier("message.txt")
+        assert "Veni" in contenu
+        chiffre = chiffrer(contenu, 3)
+        assert "yhqk" in chiffre  # 'Veni' -> 'veni' décalé de 3 devient 'yhqk'
 
 # TODO : ajoutez vos propres tests ci-dessous
 #  - test brute-force César
