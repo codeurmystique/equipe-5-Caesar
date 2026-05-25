@@ -172,7 +172,7 @@ def test_enigma_mauvaise_cle():
 
 
 # ---------------------------
-# 15. Test Enigma clé négative
+# 15. Test Enigma dechiffrer
 # ---------------------------
 def test_enigma_cle_negative():
 
@@ -185,32 +185,8 @@ def test_enigma_cle_negative():
 #                    TESTS FICHIERS
 # =========================================================
 
-
 # ---------------------------
-# 16. Test lire / écrire fichier
-# ---------------------------
-def test_lecture_message_officiel():
-
-    contenu = lire_fichier("message.txt")
-
-    assert "Veni" in contenu
-
-    chiffre = chiffrer(contenu, 3)
-
-    # écrire le résultat dans un nouveau fichier
-    ecrire_fichier("message_chiffre.txt", chiffre)
-
-    contenu_chiffre = lire_fichier("message_chiffre.txt")
-
-    assert contenu_chiffre == chiffre
-
-    # nettoyage
-    if os.path.exists("message_chiffre.txt"):
-        os.remove("message_chiffre.txt")
-
-
-# ---------------------------
-# 17. Test lecture message officiel
+# 16. Test lecture message officiel
 # ---------------------------
 def test_lecture_message_officiel():
 
@@ -233,7 +209,7 @@ def test_lecture_message_officiel():
 
 
 # ---------------------------
-# 18. Test performance
+# 17. Test performance
 # ---------------------------
 def test_performance_timeit(capsys):
 
