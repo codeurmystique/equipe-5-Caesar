@@ -320,4 +320,13 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    main()
+
+    import sys
+
+    if len(sys.argv) == 1:
+
+        print("Exemple d'utilisation :")
+        print('python main.py chiffrer "bonjour" -c 3')
+
+    else:
+        main()
