@@ -9,7 +9,7 @@ import string
 import unicodedata
 
 
-# Variable global pour simplifier l'acces dans les fonctions
+# variable global pour simplifier l'acces dans les fonctions
 ALPHABET = string.ascii_lowercase
 
 
