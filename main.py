@@ -10,8 +10,6 @@ import string
 # On l'utilise pour trouver la position d'une lettre minuscule.
 ALPHABET_MIN = string.ascii_lowercase  # "abcdefghijklmnopqrstuvwxyz"
 
-	import string
-	alphabet = string.ascii_lowercase
 
 	def dechiffrer(mot: str, cle: int):
 

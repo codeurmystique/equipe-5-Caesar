@@ -35,7 +35,7 @@ def test_cesar_brute_force_logique():
     message_original = "Alerte rouge"
     message_chiffre = chiffrer(message_original, 15)
     
-    # Le brute-force va tester les clés de 0 à 25
+    # Le brute-force va tester les clés de 0 à 25.
     solutions_trouvees = []
     for cle_test in range(26):
         decouvert = dechiffrer(message_chiffre, cle_test)
