@@ -214,9 +214,9 @@ Ce projet nous a permis de développer plusieurs compétences importantes, essen
 
 # Auteurs 
 
-**Nada Chaouachi** 
-**Asma Brik**
-**Amajuoyi Ogechi**
+- Nada Chaouachi
+- Asma Brik
+- Amajuoyi Ogechi
 
 
 # Références
