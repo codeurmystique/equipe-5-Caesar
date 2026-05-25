@@ -30,27 +30,33 @@ def enlever_accents(mot: str):
 # Introduire une fonction chiffrer
 def chiffrer(mot: str, cles: int):
 
-    # Chiffrer le mot en appliquant le decalage de césar
-    mot = enlever_accents(mot.lower())
+    # Retirer les accents sans perdre les majuscules
+    mot = enlever_accents(mot)
 
     resultat = []
 
     for lettre in mot:
 
-        if lettre in ALPHABET:
+        # Sauvegarder la casse originale
+        est_majuscule = lettre.isupper()
 
-            position = ALPHABET.find(lettre)
+        lettre_min = lettre.lower()
 
-            # Introduire une nouvelle position et appliquer le decalage modulo 26
+        if lettre_min in ALPHABET:
+
+            position = ALPHABET.find(lettre_min)
+
             nouvelle_position = (position + cles) % 26
 
-            # Introduire une nouvelle lettre
             nouvelle_lettre = ALPHABET[nouvelle_position]
+
+            # remettre la majuscule si nécessaire
+            if est_majuscule:
+                nouvelle_lettre = nouvelle_lettre.upper()
 
             resultat.append(nouvelle_lettre)
 
         else:
-            # sinon resultat conserve la lettre
             resultat.append(lettre)
 
     return ''.join(resultat)
@@ -266,6 +272,12 @@ def main(argv=None):
         help="Clé : un entier (ex. '42') ou 'a-b-c' (ex. '7-16-9') pour Enigma."
     )
 
+    parser.add_argument(
+        "--timeit",
+        action="store_true",
+        help="Mesurer le temps d'exécution"
+    )
+
     # === ÉTAPE 3 : Analyser les arguments ===
     args = parser.parse_args(argv)
 
@@ -327,6 +339,8 @@ if __name__ == "__main__":
 
         print("Exemple d'utilisation :")
         print('python main.py chiffrer "bonjour" -c 3')
+        print('python main.py enigma "MAISON" -c 7-16-9')
+        print('python main.py bruteforce_cesar "erqmrxu" --timeit')
 
     else:
         main()
