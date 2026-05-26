@@ -155,16 +155,17 @@ python main.py bruteforce_cesar "erqmrxu" --timeit
 ```text
 equipe-5-Caesar/
 │
-├── main.py
-├── README.md
-├── TESTS_GUIDE.md
-├── requirements.txt
-├── message.txt
+├── main.py                # Programme principal
+├── README.md              # Documentation du projet
+├── rapport_de_projet.md   # Rapport détaillé du projet
+├── TESTS_GUIDE.md         # Guide des tests
+├── requirements.txt       # Bibliothèques nécessaires
+├── message.txt            # Fichier texte pour les tests
+├── .gitignore             # Fichiers ignorés par Git
+├── LICENSE                # Licence du projet
 │
-├── tests/
-│   └── test_caesar.py
-│
-└── .gitignore
+└── tests/
+    └── test_caesar.py     # Tests unitaires
 ```
 
 ---
