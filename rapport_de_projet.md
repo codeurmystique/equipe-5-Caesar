@@ -29,8 +29,7 @@ Les fonctions principales développées sont :
 | `lire_fichier()` | Utilitaire disponible en ligne de commande qui permet de lire un fichier pour encrypter son contenu par la suite |
 | `ecrire_fichier()` | Utilitaire disponible en ligne de commande qui permet d'écrire un message encrypté dans un fichier |
 | `mesurer_performance()` | Mesure le temps d'exécution de l'action demandée en utilisant timeit |
-
-| `main()` | La fonction point d'entrée du programme de chiffrement |
+| `main()` | Point d'entrée du programme de chiffrement |
 
 Le programme utilise également :
 
