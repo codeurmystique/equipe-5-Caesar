@@ -9,9 +9,9 @@
 Ce projet consiste à développer un programme Python capable de :
 
 - Chiffrer un message avec le chiffrement de César
-- Déchiffrer un message avec le chiffrement de Césa
-- Utiliser le mode Enigma César avec trois clés différentes
-- Appliquer un brute force pour essayer toutes les clés possibles
+- Déchiffrer un message avec le chiffrement de César
+- Utiliser le mode Enigma César (chiffrer et déchiffrer) avec trois clés différentes
+- Appliquer un brute force (enigma et césar) pour essayer toutes les clés possibles
 
 Le programme utilise les arguments de ligne de commande (`argparse`) afin de permettre une utilisation simple et flexible.
 
@@ -95,7 +95,8 @@ python main.py bruteforce_enigma "message"
 
 ## Prérequis
 
-- Installer Python 3.14  sur votre ordinateur
+- Installer Python 3.14 sur votre ordinateur
+- Assurer vous que python est bien définit dans la variable PATH
 
 ### Vérification
 
@@ -256,12 +257,3 @@ Projet réalisé par :
 
 ---
 
-# 11. Conclusion
-
-Ce projet nous a permis de :
-
-- comprendre le fonctionnement du chiffrement de César
-- manipuler des chaînes de caractères en Python
-- utiliser les arguments de ligne de commande
-- développer un système de chiffrement polyalphabétique
-- réaliser des tests et mesurer les performances du programme
