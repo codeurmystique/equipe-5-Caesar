@@ -26,7 +26,10 @@ Les fonctions principales développées sont :
 | `enigma_dechiffrer()` | Déchiffre un message en utilisant la technique Enigma |
 | `brute_force_cesar()` | Applique l'approche brute force pour trouver la clé de chiffrement César |
 | `brute_force_enigma()` | Applique l'approche brute force pour trouver la clé de chiffrement Enigma |
+| `lire_fichier()` | Utilitaire disponible en ligne de commande qui permet de lire un fichier pour encrypter son contenu par la suite |
+| `ecrire_fichier()` | Utilitaire disponible en ligne de commande qui permet d'écrire un message encrypté dans un fichier |
 | `mesurer_performance()` | Mesure le temps d'exécution de l'action demandée en utilisant timeit |
+
 | `main()` | La fonction point d'entrée du programme de chiffrement |
 
 Le programme utilise également :
