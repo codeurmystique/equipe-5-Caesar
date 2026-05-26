@@ -177,17 +177,17 @@ NB:
 2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
 3) Ordinateur utilisé: Dell Pro 14 Plus
 
-- Le chiffrement César (2.3 us) est légerment plus rapide que le chiffrement Enigma (3 us)
+Le chiffrement César (2.3 us) est légerment plus rapide que le chiffrement Enigma (3 us)
 
-- De manière similaire, le déchiffrement César (2.5 us) est légerment plus rapide que le déchiffrement Enigma (3.1 us)
+De manière similaire, le déchiffrement César (2.5 us) est légerment plus rapide que le déchiffrement Enigma (3.1 us)
 
-- Les tests montrent que la brute force Enigma (53 ms) demande beaucoup plus de temps d'éxécution que la brute force César (60.1 us). En effet, la technique brute force Enigma nécéssite 883 (53/0.06) fois plus de temps d'éxécution que la technique brute force César.
+Les tests montrent que la brute force Enigma (53 ms) demande beaucoup plus de temps d'éxécution que la brute force César (60.1 us). En effet, la technique brute force Enigma nécéssite 883 (53/0.06) fois plus de temps d'éxécution que la technique brute force César.
 
-- La brute force César est très rapide puisqu’elle ne calcul que 26 possibilités.
+La brute force César est très rapide puisqu’elle ne calcul que 26 possibilités.
 
-- La brute force Enigma est beaucoup plus coûteuse puisqu'elle doit calculer 17 576 combinaisons.
+La brute force Enigma est beaucoup plus coûteuse puisqu'elle doit calculer 17 576 combinaisons.
 
-- Les temps d’exécution ont été mesurés avec le module timeit:
+Les temps d’exécution ont été mesurés avec le module timeit:
 
 ```python
 from timeit import timeit
