@@ -166,9 +166,9 @@ Le programme utilise trois boucles imbriquées pour tester toutes les combinaiso
 | Fonction | temps d’exécution |
 |---|------|
 | `chiffrer()` | 0,04s|
-| `dechiffrer()` | 0.04 |
-| `enigma_chiffrer()` | 0.025 |
-| `enigma_dechiffrer()` | 0.02 |
+| `dechiffrer()` | 0.04s |
+| `enigma_chiffrer()` | 0.025s |
+| `enigma_dechiffrer()` | 0.02s |
 | `brute_force_cesar()` | 0.03s |
 | `brute_force_enigma()` | 0.15s |
 
