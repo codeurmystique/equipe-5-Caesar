@@ -37,7 +37,7 @@ Les fonctions principales développées sont :
 | `chiffrer()` | Chiffre un message avec le décalage de César |
 | `dechiffrer()` | Déchiffre un message avec le décalage de César |
 | `enigma_chiffrer()` | Applique le chiffrement Enigma César |
-| `enigma_dechiffrer()` | Déchiffre un message Enigma |
+| `enigma_dechiffrer()` | Déchiffre un message en utilisant la technique Enigma |
 | `brute_force_cesar()` | Applique l'approche brute force pour trouver la clé de chiffrement César |
 | `brute_force_enigma()` | Applique l'approche brute force pour trouver la clé de chiffrement Enigma |
 | `main()` | La fonction point d'entrée du programme de chiffrement |
