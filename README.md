@@ -161,28 +161,40 @@ Le programme utilise trois boucles imbriquées pour tester toutes les combinaiso
 
 # 4. Évaluation des performances
 
-
 | Fonction | temps d’exécution |
 |---|------|
-| `chiffrer()` | 0,04s|
-| `dechiffrer()` | 0.04s |
-| `enigma_chiffrer()` | 0.025s |
-| `enigma_dechiffrer()` | 0.02s |
-| `brute_force_cesar()` | 0.03s |
-| `brute_force_enigma()` | 0.15s |
+| `chiffrer()` | 2.3 us|
+| `dechiffrer()` | 2.5 us |
+| `enigma_chiffrer()` | 3 us |
+| `enigma_dechiffrer()` | 3.1 us |
+| `brute_force_cesar()` | 60.1 us |
+| `brute_force_enigma()` | 53.05 ms |
 
+NB: 
+1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir la boucle de chiffrement-déchiffrement César et Enigma:
+- César: clé = 42
+- Enigma: clés = 42, 21, 7
+2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
+3) Ordinateur utilisé: Dell Pro 14 Plus
 
-Le brute force César est très rapide puisqu’il ne teste que 26 possibilités.
+- Le chiffrement César (2.3 us) est légerment plus rapide que le chiffrement Enigma (3 us)
 
-Le brute force Enigma est plus coûteux puisque le programme doit analyser 17 576 combinaisons.
+- De manière similaire, le déchiffrement César (2.5 us) est légerment plus rapide que le déchiffrement Enigma (3.1 us)
 
-Les temps d’exécution ont été mesurés avec :
+- Les tests montrent que la brute force Enigma (53 ms) demande beaucoup plus de temps d'éxécution que la brute force César (60.1 us). En effet, la technique brute force Enigma nécéssite 883 (53/0.06) fois plus de temps d'éxécution que la technique brute force César.
+
+- La brute force César est très rapide puisqu’elle ne calcul que 26 possibilités.
+
+- La brute force Enigma est beaucoup plus coûteuse puisqu'elle doit calculer 17 576 combinaisons.
+
+- Les temps d’exécution ont été mesurés avec le module timeit:
 
 ```python
-from time import perf_counter
-```
+from timeit import timeit
+from main import brute_force_cesar
+timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)```
 
-Les tests montrent que le brute force Enigma demande beaucoup plus de calculs que le chiffrement César simple.
+
 
 ---
 
