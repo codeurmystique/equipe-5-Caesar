@@ -22,11 +22,11 @@ nous allons détailler :
 
 Le programme permet à l’utilisateur de :
 
-- chiffrer un message avec le chiffrement de César ;
-- déchiffrer un message ;
-- utiliser le mode Enigma César avec trois clés différentes ;
-- appliquer un brute force pour essayer toutes les clés possibles ;
-- lancer les opérations directement depuis le terminal grâce au module `argparse`.
+- Chiffrer un message avec le chiffrement de César ;
+- Déchiffrer un message en utilisant la techniqiue César ;
+- Utiliser le mode Enigma César avec trois clés différentes ;
+- Appliquer un brute force pour essayer toutes les clés possibles ;
+- Lancer les opérations directement depuis le terminal grâce au module `argparse`.
 
 Le projet est principalement organisé dans un fichier `main.py` contenant les différentes fonctions du programme.
 
