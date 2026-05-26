@@ -86,9 +86,9 @@ D → G
 
 Le programme calcule la nouvelle position grâce à l’opération modulo 26 :
 
-""" python
+``` python
 nouvelle_position = (position + cle) % 26
-""""
+```
 
 L’utilisation du modulo permet de revenir au début de l’alphabet lorsque la fin est atteinte.
 
