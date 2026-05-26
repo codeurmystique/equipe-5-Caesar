@@ -40,7 +40,6 @@ Les fonctions principales développées sont :
 | `enigma_dechiffrer()` | Déchiffre un message Enigma |
 | `brute_force_cesar()` | Applique l'approche brute force pour trouver la clé de chiffrement César |
 | `brute_force_enigma()` | Applique l'approche brute force pour trouver la clé de chiffrement Enigma |
-| `_parse_cle()` | Convertit l'argument --cle en clé utilisable |
 | `main()` | La fonction point d'entrée du programme de chiffrement |
 
 Le programme utilise également :
