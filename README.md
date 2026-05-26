@@ -147,30 +147,9 @@ python main.py enigma "Maison" -c 7-16-9
 ```bash
 python main.py bruteforce_cesar "erqmrxu" --timeit
 ```
-
 ---
 
-# 6. Structure du projet
-
-```text
-equipe-5-Caesar/
-│
-├── main.py                # Programme principal
-├── README.md              # Documentation du projet
-├── rapport_de_projet.md   # Rapport détaillé du projet
-├── TESTS_GUIDE.md         # Guide des tests
-├── requirements.txt       # Bibliothèques nécessaires
-├── message.txt            # Fichier texte pour les tests
-├── .gitignore             # Fichiers ignorés par Git
-├── LICENSE                # Licence du projet
-│
-└── tests/
-    └── test_caesar.py     # Tests unitaires
-```
-
----
-
-# 7. Choix de conception
+# 6. Choix de conception
 
 ## Gestion des accents
 
@@ -222,7 +201,7 @@ Le programme est structuré avec plusieurs fonctions afin de :
 
 ---
 
-# 8. Technologies utilisées
+# 7. Technologies utilisées
 
 - Python 3
 - argparse
@@ -232,7 +211,7 @@ Le programme est structuré avec plusieurs fonctions afin de :
 
 ---
 
-# 9. Tests
+# 8. Tests
 
 Les tests automatiques sont disponibles dans :
 
@@ -248,7 +227,7 @@ pytest
 
 ---
 
-# 10. Auteurs
+# 9. Auteurs
 
 Projet réalisé par :
 
