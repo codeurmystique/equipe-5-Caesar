@@ -187,14 +187,14 @@ Les temps d’exécution ont été mesurés avec le module timeit:
 ```python
 from timeit import timeit
 from main import brute_force_cesar
-timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)
+timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=1000)
 ```
 
 NB: 
 1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir les boucles de chiffrement-déchiffrement César et Enigma:
 - César: clé = 42
 - Enigma: clés = 42, 21, 7
-2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
+2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps d'éxécution sur 1000 itérations
 3) Ordinateur utilisé: Dell Pro 14 Plus
 
 ---
