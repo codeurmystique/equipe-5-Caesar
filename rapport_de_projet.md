@@ -23,7 +23,7 @@ nous allons détailler :
 Le programme permet à l’utilisateur de :
 
 - Chiffrer un message avec le chiffrement de César ;
-- Déchiffrer un message en utilisant la techniqiue César ;
+- Déchiffrer un message en utilisant la technique César ;
 - Utiliser le mode Enigma César avec trois clés différentes ;
 - Appliquer un brute force pour essayer toutes les clés possibles ;
 - Lancer les opérations directement depuis le terminal grâce au module `argparse`.
@@ -35,7 +35,7 @@ Les fonctions principales développées sont :
 | Fonction | Rôle |
 |---|---|
 | `chiffrer()` | Chiffre un message avec le décalage de César |
-| `dechiffrer()` | Déchiffre un message |
+| `dechiffrer()` | Déchiffre un message avec le décalage de César |
 | `enigma_chiffrer()` | Applique le chiffrement Enigma César |
 | `enigma_dechiffrer()` | Déchiffre un message Enigma |
 | `brute_force_cesar()` | Applique l'approche brute force pour trouver la clé de chiffrement César |
