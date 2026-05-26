@@ -191,7 +191,7 @@ timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)
 ```
 
 NB: 
-1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir la boucle de chiffrement-déchiffrement César et Enigma:
+1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir les boucles de chiffrement-déchiffrement César et Enigma:
 - César: clé = 42
 - Enigma: clés = 42, 21, 7
 2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
