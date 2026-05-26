@@ -251,8 +251,8 @@ pytest
 
 Projet réalisé par :
 
-- Nada Chaouachi
 - Asma Brik
+- Nada Chaouachi
 - Amajuoyi Ogechi
 
 ---
