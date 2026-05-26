@@ -34,14 +34,14 @@ Les fonctions principales développées sont :
 
 | Fonction | Rôle |
 |---|---|
-| `chiffrer()` | chiffre un message avec le décalage de César |
-| `dechiffrer()` | déchiffre un message |
-| `enigma_chiffrer()` | applique le chiffrement Enigma César |
-| `enigma_dechiffrer()` | déchiffre un message Enigma |
-| `brute_force_cesar()` | teste toutes les clés César |
-| `brute_force_enigma()` | teste toutes les combinaisons Enigma |
-| `_parse_cle()` | transforme la clé entrée par l’utilisateur |
-| `main()` | gère les arguments du terminal |
+| `chiffrer()` | Chiffre un message avec le décalage de César |
+| `dechiffrer()` | Déchiffre un message |
+| `enigma_chiffrer()` | Applique le chiffrement Enigma César |
+| `enigma_dechiffrer()` | Déchiffre un message Enigma |
+| `brute_force_cesar()` | Applique l'approche brute force pour trouver la clé de chiffrement César |
+| `brute_force_enigma()` | Applique l'approche brute force pour trouver la clé de chiffrement Enigma |
+| `_parse_cle()` | Convertit l'argument --cle en clé utilisable |
+| `main()` | La fonction point d'entrée du programme de chiffrement |
 
 Le programme utilise également :
 
