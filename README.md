@@ -170,18 +170,13 @@ Le programme utilise trois boucles imbriquées pour tester toutes les combinaiso
 | `brute_force_cesar()` | 60.1 us |
 | `brute_force_enigma()` | 53.05 ms |
 
-NB: 
-1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir la boucle de chiffrement-déchiffrement César et Enigma:
-- César: clé = 42
-- Enigma: clés = 42, 21, 7
-2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
-3) Ordinateur utilisé: Dell Pro 14 Plus
-
 Le chiffrement César (2.3 us) est légerment plus rapide que le chiffrement Enigma (3 us)
 
 De manière similaire, le déchiffrement César (2.5 us) est légerment plus rapide que le déchiffrement Enigma (3.1 us)
 
-Les tests montrent que la brute force Enigma (53 ms) demande beaucoup plus de temps d'éxécution que la brute force César (60.1 us). En effet, la technique brute force Enigma nécéssite 883 (53/0.06) fois plus de temps d'éxécution que la technique brute force César.
+Les tests montrent que la brute force Enigma (53 ms) demande beaucoup plus de temps d'éxécution que la brute force César (60.1 us). 
+
+En effet, la technique brute force Enigma nécéssite 883 (53/0.06) fois plus de temps d'éxécution que la technique brute force César.
 
 La brute force César est très rapide puisqu’elle ne calcul que 26 possibilités.
 
@@ -195,6 +190,12 @@ from main import brute_force_cesar
 timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)
 ```
 
+NB: 
+1) Afin de  mesurer les temps d'exécution des fonctions, nous avons utilisé la chaine de caractère "MAISON" avec les clés suivantes, pour couvrir la boucle de chiffrement-déchiffrement César et Enigma:
+- César: clé = 42
+- Enigma: clés = 42, 21, 7
+2) les chiffres listés dans le tableau ci-dessus représentent la moyenne de temps sur 1000 éxécution
+3) Ordinateur utilisé: Dell Pro 14 Plus
 
 ---
 
