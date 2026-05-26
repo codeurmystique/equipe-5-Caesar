@@ -36,13 +36,20 @@ def test_accents_ponctuation():
 
     message = "éèê à, ça!"
     resultat = chiffrer(message, 2)
-
+    
     # accents supprimés
     assert "é" not in resultat
+    assert "è" not in resultat
+    assert "ê" not in resultat
+    assert "à" not in resultat
+    assert "ç" not in resultat
 
     # ponctuation conservée
     assert "," in resultat
+    assert ";" in resultat
+    assert "." in resultat
     assert "!" in resultat
+    assert "?" in resultat
 
 
 # ---------------------------
