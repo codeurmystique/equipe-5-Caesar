@@ -192,7 +192,7 @@ Les temps d’exécution ont été mesurés avec le module timeit:
 ```python
 from timeit import timeit
 from main import brute_force_cesar
-timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)```
+timeit('brute_force_cesar(message_chiffre)', globals=globals(), number=100)
 
 
 
