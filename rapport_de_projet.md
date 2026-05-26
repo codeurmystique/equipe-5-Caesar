@@ -4,21 +4,7 @@
 
 
 ---
-
-# 1. Introduction
-
-Ce rapport présente la documentation relative à un programme Python permettant de réaliser différentes opérations de chiffrement et de déchiffrement basées sur le chiffrement de César ainsi que sur une version simplifiée d’Enigma César.
-
-nous allons détailler :
-
-- la structure du programme ;
-- les stratégies algorithmiques retenues, en particulier pour le brute force ;
-- l’évaluation de l’efficacité du programme (temps d’exécution, etc.) ;
-- la distribution des tâches au sein de l’équipe
-
----
-
-# 2. Structure du programme
+# 1. Structure du programme
 
 Le programme permet à l’utilisateur de :
 
@@ -76,9 +62,9 @@ Les décalages se répètent selon le modèle :
 
 ---
 
-# 3. Stratégies algorithmiques utilisées
+# 2. Stratégies algorithmiques utilisées
 
-## 3.1 Chiffrement de César
+## 2.1 Chiffrement de César
 
 Le chiffrement de César consiste à déplacer chaque lettre d’un certain nombre de positions dans l’alphabet.
 
@@ -107,7 +93,7 @@ Les accents sont retirés afin de simplifier le traitement des caractères.
 
 ---
 
-## 3.2 Enigma César
+## 2.2 Enigma César
 
 Le mode Enigma César est une version simplifiée inspirée de la machine Enigma historique.
 
@@ -133,7 +119,7 @@ Cette approche augmente la complexité du chiffrement et rend le décryptage plu
 
 ---
 
-## 3.3 Brute force
+## 2.3 Brute force
 
 Le brute force consiste à essayer automatiquement toutes les clés possibles afin de retrouver le message original.
 
@@ -159,7 +145,7 @@ Le programme utilise trois boucles imbriquées pour tester toutes les combinaiso
 
 ---
 
-# 4. Évaluation des performances
+# 3. Évaluation des performances
 
 | Fonction | temps d’exécution |
 |---|------|
@@ -199,7 +185,7 @@ NB:
 
 ---
 
-# 5. Travail d’équipe et conclusion
+# 4. Travail d’équipe et conclusion
 
 Le projet a été réalisé de manière collaborative à l’aide de GitHub.
 
@@ -217,12 +203,6 @@ Les principales tâches réalisées étaient :
 - implémentation du brute force ;
 - création des tests unitaires ;
 - validation des fonctionnalités avec `pytest`.
-
-Ce projet nous a permis de développer plusieurs compétences importantes, essentiellement:
-
-- création de fonctions Python ;
-- Manipulation de GitHub ;
-- débogage et tests unitaires.
 
 # Auteurs 
 
