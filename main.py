@@ -325,12 +325,6 @@ def main(argv=None):
             print(f"Clés {cles} : {texte}")
 
 
-# TODO : Une fois les fonctions de base implémentées, vous pourrez :
-# - Ajouter des options pour lire/écrire depuis des fichiers
-# - Implémenter le mode brute-for
-# - Ajouter d'autres fonctionnalités
-
-
 if __name__ == "__main__":
 
     import sys
